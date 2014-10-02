@@ -18,6 +18,11 @@ class AudioFileDecoder : public AbstractAudio
 	virtual boolean initializeDecoder() = 0;
 
 protected:
+	//Helper methods for negotiating Sampling Rate and # Channels
+	virtual void MinMaxSamplingRate(int &min, int &max, int &preferred);
+	virtual void MinMaxChannels(int &min, int &max, int &preferred);
+
+
 	std::string FileName;
 	ReadCompleteIF* readCompleteIF;
 	AbstractDecoderIF* decoder;

@@ -31,8 +31,8 @@ protected:
 	void NegotiateNumberOfChannels();
 	
 	//Helper methods for negotiating Sampling Rate and # Channels
-	void MinMaxSamplingRate(int &min, int &max, int &preferred);
-	void MinMaxChannels(int &min, int &max, int &preferred);
+	virtual void MinMaxSamplingRate(int &min, int &max, int &preferred);
+	virtual void MinMaxChannels(int &min, int &max, int &preferred);
 	
 	//Methods to set negotiated values to all devices in the chain
 	void SetSamplingRateRecursive(int rate);
