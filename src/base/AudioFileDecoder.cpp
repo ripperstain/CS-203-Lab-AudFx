@@ -4,7 +4,7 @@
 
 
 //Helper methods for negotiating Sampling Rate and # Channels
-virtual void MinMaxSamplingRate(int &min, int &max, int &preferred)
+void AudioFileDecoder::MinMaxSamplingRate(int &min, int &max, int &preferred)
 {
 	initializeDecoder();
 	
@@ -12,7 +12,7 @@ virtual void MinMaxSamplingRate(int &min, int &max, int &preferred)
 	max = SamplingRate;
 	preferred = SamplingRate;
 }
-virtual void MinMaxChannels(int &min, int &max, int &preferred)
+void AudioFileDecoder::MinMaxChannels(int &min, int &max, int &preferred)
 {
 	initializeDecoder();
 	

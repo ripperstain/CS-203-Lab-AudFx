@@ -9,7 +9,7 @@ class ReadCompleteIF
 class AbstractDecoderIF
 {
 	virtual std::string getName() = 0;
-	virtual int getSamples(int16* buffer, int length) = 0;
+	virtual int getSamples(char* buffer, int length) = 0;
 };
 
 class NegotiationCompleteIF {

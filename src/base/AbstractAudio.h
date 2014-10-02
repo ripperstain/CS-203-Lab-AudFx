@@ -14,9 +14,9 @@ Sink
 class AbstractAudio
 {
 public:
-	AbstractAudio(string name, AudioType type);
+	AbstractAudio(std::string name, AudioType type);
 	
-	virtual int getsamples(int16* buffer, int length) = 0;
+	virtual int getsamples(char* buffer, int length) = 0;
 	
 	std::string getName() { return Name; }
 	bool getByPass() { return ByPass; }

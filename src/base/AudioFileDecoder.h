@@ -8,14 +8,14 @@
 
 class AudioFileDecoder : public AbstractAudio
 {
-	AudioFileDecoder(String fileName, ReadCompleteIF rcIF) : FileName(filename), readCompleteIF(rcif) 
+	AudioFileDecoder(std::string filename, ReadCompleteIF* rcif) : FileName(filename), readCompleteIF(rcif) 
 	{}
 
 	// Stage told to reset
 	virtual void reset() = 0;
 	
 	// Read wave file and initialize appropriate decoder
-	virtual boolean initializeDecoder() = 0;
+	virtual bool initializeDecoder() = 0;
 
 protected:
 	//Helper methods for negotiating Sampling Rate and # Channels

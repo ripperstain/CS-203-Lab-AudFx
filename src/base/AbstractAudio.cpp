@@ -1,5 +1,7 @@
 #include "AbstractAudio.h"
 
+using namespace std;
+
 AbstractAudio::AbstractAudio(string name, AudioType type)
 {
 	Name = name;
@@ -18,7 +20,7 @@ AbstractAudio::AbstractAudio(string name, AudioType type)
 
 
 //Methods to negotiate Sampling Rat and # Channels in Audio Chain
-void NegotiateSamplingRate()
+void AbstractAudio::NegotiateSamplingRate()
 {
 	if(next != nullptr){
 		next->NegotiateSamplingRate();
@@ -35,7 +37,7 @@ void NegotiateSamplingRate()
 	}
 }
 
-void NegotiateNumberOfChannels()
+void AbstractAudio::NegotiateNumberOfChannels()
 {
 	if(next != nullptr){
 		next->NegotiateNumberOfChannels();
@@ -54,7 +56,7 @@ void NegotiateNumberOfChannels()
 
 
 //Helper methods for negotiating Sampling Rate and # Channels
-void MinMaxSamplingRate(int min, int max, int preferred)
+void AbstractAudio::MinMaxSamplingRate(int &min, int &max, int &preferred)
 {
 	if(previous != nullptr){
 		previous->MinMaxSamplingRate(min, max, preferred);
@@ -78,14 +80,14 @@ void MinMaxSamplingRate(int min, int max, int preferred)
 	}
 }
 
-void MinMaxChannels(int min, int max, int preferred)
+void AbstractAudio::MinMaxChannels(int &min, int &max, int &preferred)
 {
-	if(previous != null){
+	if(previous != nullptr){
 		previous->MinMaxChannels(min, max, preferred);
 	}
 	
-	if(numChannels != 0){
-		preferred = numChannels;
+	if (NumChannels != 0){
+		preferred = NumChannels;
 	}
 	
 	int currentMin = min;
@@ -103,7 +105,7 @@ void MinMaxChannels(int min, int max, int preferred)
 
 
 //Methods to set negotiated values to all devices in the chain
-void SetSamplingRateRecursive(int rate)
+void AbstractAudio::SetSamplingRateRecursive(int rate)
 {
 	if(previous != nullptr){
 		previous->SetSamplingRateRecursive(rate);
@@ -113,7 +115,7 @@ void SetSamplingRateRecursive(int rate)
 	SamplingRateFrozen = true;
 }
 
-void SetChannelsRecursive(int ch)
+void AbstractAudio::SetChannelsRecursive(int ch)
 {
 	if(previous != nullptr){
 		previous->SetChannelsRecursive(ch);
