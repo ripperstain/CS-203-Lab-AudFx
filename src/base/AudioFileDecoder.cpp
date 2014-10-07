@@ -16,7 +16,7 @@ void AudioFileDecoder::MinMaxChannels(int &min, int &max, int &preferred)
 {
 	initializeDecoder();
 	
-	min = numChannels;
-	max = numChannels;
-	preferred = numChannels;
+	min = NumChannels;
+	max = NumChannels;
+	preferred = NumChannels;
 }

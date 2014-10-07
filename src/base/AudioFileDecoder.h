@@ -8,7 +8,8 @@
 
 class AudioFileDecoder : public AbstractAudio
 {
-	AudioFileDecoder(std::string filename, ReadCompleteIF* rcif) : FileName(filename), readCompleteIF(rcif) 
+	AudioFileDecoder(std::string filename, ReadCompleteIF* rcif) : FileName(filename), readCompleteIF(rcif),
+	AbstractAudio(filename, AudioType::Source)
 	{}
 
 	// Stage told to reset

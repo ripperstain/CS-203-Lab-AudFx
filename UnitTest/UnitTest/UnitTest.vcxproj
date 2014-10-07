@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\jhaskell\Documents\GitHub\CS-203-Lab-AudFx\CS-203-Lab-AudFx\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,11 +81,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
     <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
+    <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp" />
+    <ClCompile Include="..\..\src\unittest\unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\base\AbstractAudio.h" />
     <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
     <ClInclude Include="..\..\src\base\Interfaces.h" />
+    <ClInclude Include="..\..\src\base\unittest\AbstractAudioTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
