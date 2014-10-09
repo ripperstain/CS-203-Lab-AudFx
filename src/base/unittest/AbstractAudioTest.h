@@ -11,6 +11,14 @@
 	the test via it's RunTest() method.  The constructed
 	audio chain will be:
 	AATestSource -> AATestProcessor -> AATestSink
+
+	Each device is only required to provide their specific implementation of
+	getSamples, but each also provides their own constructor for their own
+	specific initialization.
+
+	The sink device also provides it's own unique RunTest() method, which is
+	the call to run the unit tests.  This is where methods like Play(), Pause(),
+	Stop() would be implemented as well.
 */
 class AATestSource : public AbstractAudio
 {
