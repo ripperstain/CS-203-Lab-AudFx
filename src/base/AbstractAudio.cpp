@@ -43,7 +43,7 @@ void AbstractAudio::NegotiateNumberOfChannels()
 		next->NegotiateNumberOfChannels();
 	}else{
 		int min = 1;
-		int max = 2;
+		int max = 1000;
 		int preferred = 1;
 		
 		MinMaxChannels(min, max, preferred);
