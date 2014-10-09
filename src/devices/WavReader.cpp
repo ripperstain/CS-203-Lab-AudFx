@@ -7,6 +7,7 @@ using namespace std;
 WavReader::WavReader(string fileName) : AudioFileDecoder(fileName, nullptr)
 {
 	FileName = fileName;
+	infile.open(FileName, ios::binary | ios::in);
 	initializeDecoder();
 
 }
@@ -40,7 +41,6 @@ int WavReader::getSamples(char* buffer, int length)
 
 bool WavReader::initializeDecoder()
 {
-   infile.open(FileName, ios::binary | ios::in);
      
     string tag;
     unsigned int filesize;
@@ -110,8 +110,9 @@ bool WavReader::initializeDecoder()
 #ifdef CONSOLEOUT
 	cout << "DataSize:        " << DataSize << endl << endl;
 #endif
-	//audioLoaded = getAudioBlock(infile, DataSize, audioData);
-	return audioLoaded;
+	audioData = new char[20];
+	getAudioBlock(infile, audioData, 20);
+	return true;
 
 }
 
@@ -156,6 +157,7 @@ void getTag(ifstream& infile, string &tag)
 //Read in a block of Audio data (not for use reading header data)
 int getAudioBlock(ifstream &infile, char *data, int size)
 {
+	if (!infile) return -1;
 	int index = 0;
 	
 	infile.read(data, size);
