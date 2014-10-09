@@ -52,7 +52,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;CONSOLEOUT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
     <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
     <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp" />
+    <ClCompile Include="..\..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\..\src\unittest\unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,10 @@
     <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
     <ClInclude Include="..\..\src\base\Interfaces.h" />
     <ClInclude Include="..\..\src\base\unittest\AbstractAudioTest.h" />
+    <ClInclude Include="..\..\src\devices\WavReader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\audio\Yamaha-SY-35-Clarinet-C5.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

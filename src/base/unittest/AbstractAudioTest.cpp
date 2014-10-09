@@ -77,12 +77,12 @@ bool AATestSink::RunTest()
 	cout << "Negotiating Sampling Rate" << endl;
 	NegotiateSamplingRate();
 	cout << "Sampling Rate is " << SamplingRate << endl;
-	assert(SamplingRate == 40404);
+	assert(SamplingRate == 44100);
 
 	cout << "Negotiating Number of Channels" << endl;
 	NegotiateNumberOfChannels();
 	cout << "Number of Channels is " << NumChannels << endl;
-	assert(NumChannels == 77);
+	assert(NumChannels == 2);
 
 
 	//get samples and verify

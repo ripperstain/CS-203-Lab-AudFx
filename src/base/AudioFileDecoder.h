@@ -8,6 +8,7 @@
 
 class AudioFileDecoder : public AbstractAudio
 {
+public:
 	AudioFileDecoder(std::string filename, ReadCompleteIF* rcif) : FileName(filename), readCompleteIF(rcif),
 	AbstractAudio(filename, AudioType::Source)
 	{}
@@ -27,6 +28,11 @@ protected:
 	std::string FileName;
 	ReadCompleteIF* readCompleteIF;
 	AbstractDecoderIF* decoder;
+	
+	unsigned int chunksize;
+	unsigned int ByteRate;
+	unsigned int DataSize;
+
 };
 
 #endif

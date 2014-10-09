@@ -59,8 +59,8 @@ protected:
 	
 	std::string Name;
 	AudioType Type;
-	int SamplingRate;
-	int NumChannels;
+	unsigned int SamplingRate;
+	unsigned short NumChannels;
 	
 	bool SamplingRateFrozen, NumChannelsFrozen, ByPass;
 
