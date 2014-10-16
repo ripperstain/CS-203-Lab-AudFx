@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp" />
     <ClCompile Include="..\..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\..\src\unittest\unittest.cpp" />
+    <ClCompile Include="PlayingPauseStop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\base\AbstractAudio.h" />
