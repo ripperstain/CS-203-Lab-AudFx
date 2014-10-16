@@ -33,6 +33,9 @@
     <ClCompile Include="PlayingPauseStop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="KaraokeProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\base\AbstractAudio.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\devices\WavReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KaraokeProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
