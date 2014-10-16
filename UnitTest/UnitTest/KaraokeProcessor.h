@@ -1,0 +1,6 @@
+class KaraokeProcessor
+{
+public:
+	KaraokeProcessor();
+
+};
