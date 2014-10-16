@@ -87,13 +87,14 @@ bool AATestSink::RunTest()
 
 	//get samples and verify
 	const int bufsize = 10;
-	char* mybuf = new char[bufsize];
-	int samplesReturned = getSamples(mybuf, bufsize);
+	unsigned char* mybuf = new unsigned char[bufsize];
+	int samplesReturned = getSamples((char*)mybuf, bufsize);
 	
 	assert(samplesReturned == bufsize);
 
 	for (int i = 0; i < samplesReturned; i++){
-		cout << " Verifying element " << i << " is " << i + 1 << endl;
+		cout << " Verifying element " << i << " is " << i + 1 << " : ";
+		cout << (int)mybuf[i] << endl;
 		assert(mybuf[i] == i + 1);
 	}
 

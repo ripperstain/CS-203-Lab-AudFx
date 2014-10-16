@@ -13,13 +13,18 @@ WavReader::WavReader(string fileName) : AudioFileDecoder(fileName, nullptr)
 }
 
 
+//Easiest way to reset is to close and re-open the file, then re-initialize
 void WavReader::reset()
 {
-	
-
+	infile.close();
+	infile.open(FileName, ios::binary | ios::in);
+	initializeDecoder();
 }
 
 
+/*
+		Prototypes for helper functions used by WavReader
+*/
 //Read in a Little Endian Unsigned Int (4 bytes)
 void getLEInt(ifstream &infile, unsigned int& data);
 //Read in a Little Endian Unsigned Short (2 bytes)
@@ -53,6 +58,8 @@ bool WavReader::initializeDecoder()
 	if (!infile.is_open()){
 		return false;
 	}
+
+
     getTag(infile, tag);
 #ifdef CONSOLEOUT
     cout << tag << endl;
@@ -60,6 +67,7 @@ bool WavReader::initializeDecoder()
 	if (tag != "RIFF"){
 		return false;
 	}
+
 
 	//filesize
     getLEInt(infile, filesize);
@@ -71,6 +79,8 @@ bool WavReader::initializeDecoder()
 	if (tag != "WAVE"){
 		return false;
 	}
+
+
 	getTag(infile, tag);
 #ifdef CONSOLEOUT
 	cout << tag << endl;
@@ -78,6 +88,8 @@ bool WavReader::initializeDecoder()
 	if (tag != "fmt "){
 		return false;
 	}
+
+
 	getLEInt(infile, chunksize);
 
 	//Audio Format 2 bytes
@@ -102,16 +114,38 @@ bool WavReader::initializeDecoder()
 	cout << "Block Align:     " << BlockAlign << endl;
 	cout << "Bits Per Sample: " << BitsPerSample << endl;
 #endif 
-	getTag(infile, tag);
+
+	if (AudioFormat != 1){
+#ifdef CONSOLEOUT
+		cout << "Compressed wavs no supported." << endl;
+#endif
+		return false;
+	}
+
+
+	//Check for and skip non-data chunks
+	//ignoring the entire chunksize may be incorrect
+	//some chunks include the tag and chunksize in the size
+	//but it appears some don't.
+	while (!infile.eof() && tag != "data"){
+		getTag(infile, tag);
+		if (tag != "data"){
+			//Get size of chunk
+			getLEInt(infile, chunksize);
+			//Read rest of chunk (don't care about contents)
+			infile.ignore(chunksize - 8);
+		}
+	}
 	if (tag != "data"){
 		return false;
 	}
+
 	getLEInt(infile, DataSize);
 #ifdef CONSOLEOUT
 	cout << "DataSize:        " << DataSize << endl << endl;
 #endif
-	audioData = new char[20];
-	getAudioBlock(infile, audioData, 20);
+	//audioData = new char[20];
+	//getAudioBlock(infile, audioData, 20);
 	return true;
 
 }
