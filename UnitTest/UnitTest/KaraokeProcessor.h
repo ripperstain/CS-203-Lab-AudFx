@@ -1,6 +1,0 @@
-class KaraokeProcessor
-{
-public:
-	KaraokeProcessor();
-
-};

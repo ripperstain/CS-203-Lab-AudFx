@@ -83,18 +83,17 @@
     <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
     <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
     <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp" />
+    <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp" />
     <ClCompile Include="..\..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\..\src\unittest\unittest.cpp" />
-    <ClCompile Include="KaraokeProcessor.cpp" />
-    <ClCompile Include="PlayingPauseStop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\base\AbstractAudio.h" />
     <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
     <ClInclude Include="..\..\src\base\Interfaces.h" />
     <ClInclude Include="..\..\src\base\unittest\AbstractAudioTest.h" />
+    <ClInclude Include="..\..\src\devices\KaraokeProcessor.h" />
     <ClInclude Include="..\..\src\devices\WavReader.h" />
-    <ClInclude Include="KaraokeProcessor.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\audio\Yamaha-SY-35-Clarinet-C5.wav" />

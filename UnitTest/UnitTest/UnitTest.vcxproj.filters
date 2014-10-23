@@ -30,10 +30,7 @@
     <ClCompile Include="..\..\src\devices\WavReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayingPauseStop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KaraokeProcessor.cpp">
+    <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +50,7 @@
     <ClInclude Include="..\..\src\devices\WavReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KaraokeProcessor.h">
+    <ClInclude Include="..\..\src\devices\KaraokeProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,6 +2,7 @@
 #include "cassert"
 #include "base\unittest\AbstractAudioTest.h"
 #include "devices\WavReader.h"
+#include "devices\KaraokeProcessor.h"
 #include <iostream>
 
 using namespace std;
@@ -10,7 +11,7 @@ int main()
 {
 	cout << "Testing AbstractAudio class via derived test classes" << endl;
 	//AATestSource source("Source");
-	AATestProcessor processor("Processor");
+	KaraokeProcessor processor("Processor");
 	AATestSink sink("Sink");
 	WavReader reader("..\\..\\audio\\Yamaha-SY-35-Clarinet-C5.wav");
 

@@ -5,7 +5,7 @@
 #include<stdlib.h>
 using namespace std;
 
-int main(char argc)
+int notmain(char argc)
 {
 	//Playing A WAV File
 	PlaySound(TEXT("C:/EXAMPLE.wav"), NULL, SND_FILENAME | SND_ASYNC);
