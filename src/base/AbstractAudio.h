@@ -51,7 +51,8 @@ public:
 	void setPrevious(AbstractAudio *p) { previous = p; }
 
 	virtual AudioFormatStruct getAudioFormat();
-	
+	virtual void reset(){}
+
 protected:
 	//Methods to negotiate Sampling Rat and # Channels in Audio Chain
 	void NegotiateSamplingRate();
@@ -64,6 +65,7 @@ protected:
 	//Methods to set negotiated values to all devices in the chain
 	void SetSamplingRateRecursive(int rate);
 	void SetChannelsRecursive(int ch);
+
 
 	//Pointers to next and previous devices in chain
 	AbstractAudio *next, *previous;

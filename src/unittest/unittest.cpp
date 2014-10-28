@@ -24,12 +24,37 @@ int main()
 	//so it does not have a next link
 	if (1){
 		reader.setNext(&player);
+		//processor.setPrevious(&reader);
+		//processor.setNext(&player);
 		player.setPrevious(&reader);
 		devicelist devs = player.GetDevices();
 		for (auto it = devs.begin(); it != devs.end(); ++it){
 			wcout << *it << endl;
 		}
 		player.play();
+		char cmd;
+		bool stop = false;
+		while (stop == false){
+			cin >> cmd;
+			switch (cmd){
+			case 'p':
+				if (player.isPlaying()){
+					player.pause();
+				}
+				else{
+					player.play();
+				}
+				break;
+			case 's':
+				player.stop();
+				break;
+			case 'x':
+				stop = true;
+				break;
+			}
+		}
+		//system("pause");
+		//player.stop();
 	}
 	else{
 		reader.setNext(&processor);

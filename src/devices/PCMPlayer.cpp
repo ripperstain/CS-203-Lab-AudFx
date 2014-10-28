@@ -12,8 +12,8 @@ PCMPlayer::PCMPlayer(string name) : AbstractAudio(name, AudioType::Sink)
 {
 	deviceNum = 0;
 	numDevices = waveOutGetNumDevs();
-	Playing.store(false);
-	Paused.store(false);
+	bPlaying.store(false);
+	bPaused.store(false);
 
 	waveFreeBlockCount.store(BLOCK_COUNT);
 	for (int i = 0; i < BLOCK_COUNT; i++){
@@ -23,6 +23,13 @@ PCMPlayer::PCMPlayer(string name) : AbstractAudio(name, AudioType::Sink)
 
 PCMPlayer::~PCMPlayer()
 {
+	if (bPlaying.load()){
+		bPlaying.store(false);
+		
+	}
+	if (playThread.joinable()){
+		playThread.join();
+	}
 	for (int i = 0; i < BLOCK_COUNT; i++){
 		delete waveBlocks[i].lpData;
 	}
@@ -30,28 +37,38 @@ PCMPlayer::~PCMPlayer()
 
 bool PCMPlayer::NegotiateParameters()
 {
-
+	NegotiateSamplingRate();
+	NegotiateNumberOfChannels();
 	return true;
 }
 
 bool PCMPlayer::play()
 {
 
-	if (Playing.load()){
+	if (bPlaying.load()){
 		//Already playing
-		return;
+		return true;
 	}
 
-	Playing.store(true);
-	playBackground();
+	bPlaying.store(true);
+	playThread = thread(&PCMPlayer::playBackground, this);
 
 	return true;
 
 }
 
+void PCMPlayer::pause()
+{
+	//toggle bPaused flag
+	bool tmp = bPaused.load();
+	bPaused.store(!tmp);
+
+}
 void PCMPlayer::stop()
 {
-	Playing.store(false);
+	bPlaying.store(false);
+	playThread.join();
+	previous->reset();
 }
 
 void PCMPlayer::playBackground()
@@ -98,7 +115,13 @@ void PCMPlayer::playBackground()
 #endif
 
 	char *buffer = new char[BLOCK_SIZE];
-	while (Playing.load()) {
+
+	//Get and play samples while bPlaying is true
+	//if stop() is called, it sets bPlaying to false and
+	//waits for play thread to join.
+	while (bPlaying.load()) 
+	{
+
 		DWORD readBytes;
 		readBytes = previous->getSamples(buffer, BLOCK_SIZE);
 
@@ -114,6 +137,19 @@ void PCMPlayer::playBackground()
 		}
 
 		writeAudio(hwo, buffer, BLOCK_SIZE);
+
+		if (bPaused.load()){
+			waveOutPause(hwo);
+			while (bPaused.load() && bPlaying.load()){
+				Sleep(10);
+			}
+			//Only restart if we're still playing
+			//stop could have been called while paused
+			if (bPlaying.load()){
+				waveOutRestart(hwo);
+			}
+
+		}
 	}
 
 	//Wait until all blocks have been played
@@ -127,6 +163,7 @@ void PCMPlayer::playBackground()
 
 	waveOutClose(hwo);
 	delete buffer;
+	bPlaying.store(false);
 
 }
 

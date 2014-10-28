@@ -46,7 +46,7 @@ public:
 	devicelist GetDevices();
 	bool SelectDevice();
 
-	bool isPlaying();
+	bool isPlaying() { return bPlaying.load(); }
 protected:
 	
 private:
@@ -56,15 +56,18 @@ private:
 	int waveCurrentBlock;
 	HWAVEOUT hwo; /* device handle */
 	AudioFormatStruct AudioFormat;
-	thread playThread;
+	std::thread playThread;
 
 	/*
 	This is the counter to keep track of how many free blocks are available
 	STL atomic is used as the waveOutProc callback is called asynchronously.
 	*/
 	std::atomic<int> waveFreeBlockCount;
-	std::atomic<bool> Playing;
-	std::atomic<bool> Paused;
+	/*
+	
+	*/
+	std::atomic<bool> bPlaying;
+	std::atomic<bool> bPaused;
 	void playBackground();
 	void writeAudio(HWAVEOUT hWaveOut, char* data, int size);
 
