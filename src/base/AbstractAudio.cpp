@@ -18,6 +18,15 @@ AbstractAudio::AbstractAudio(string name, AudioType type)
 	
 }
 
+AudioFormatStruct AbstractAudio::getAudioFormat()
+{
+	if (previous != nullptr){
+		return previous->getAudioFormat();
+	}
+	else{
+		return AudioFormatStruct();
+	}
+}
 
 //Methods to negotiate Sampling Rat and # Channels in Audio Chain
 void AbstractAudio::NegotiateSamplingRate()

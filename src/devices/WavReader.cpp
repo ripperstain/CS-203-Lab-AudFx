@@ -50,7 +50,7 @@ bool WavReader::initializeDecoder()
     string tag;
     unsigned int filesize;
     //unsigned int SampleRate, ByteRate;
-    unsigned short AudioFormat, BlockAlign, BitsPerSample;
+    //unsigned short AudioFormat, BlockAlign, BitsPerSample;
     char *audioData = nullptr;
     bool played = false, audioLoaded = false;
  
@@ -93,35 +93,37 @@ bool WavReader::initializeDecoder()
 	getLEInt(infile, chunksize);
 
 	//Audio Format 2 bytes
-	getLEShort(infile, AudioFormat);
+	getLEShort(infile, AudioFormat.AudioFormat);
 	//Num Channels 2 bytes
-	getLEShort(infile, NumChannels);
+	getLEShort(infile, AudioFormat.NumChannels);
 	//Sample Rate 4 bytes
-	getLEInt(infile, SamplingRate);
+	getLEInt(infile, AudioFormat.SampleRate);
 	//Byte Rate 4 bytes
-	getLEInt(infile, ByteRate);
+	getLEInt(infile, AudioFormat.ByteRate);
 	//Block Align 2 bytes
-	getLEShort(infile, BlockAlign);
+	getLEShort(infile, AudioFormat.BlockAlign);
 	//Bits Per Sample 2 bytes
-	getLEShort(infile, BitsPerSample);
+	getLEShort(infile, AudioFormat.BitsPerSample);
 #ifdef CONSOLEOUT 
 	cout << "Filesize:        " << filesize << endl;
 	cout << "Chunksize:       " << chunksize << endl;
-	cout << "Audio Format:    " << AudioFormat << endl;
-	cout << "Num Channels:    " << NumChannels << endl;
-	cout << "Sample Rate:     " << SamplingRate << endl;
-	cout << "Byte Rate:       " << ByteRate << endl;
-	cout << "Block Align:     " << BlockAlign << endl;
-	cout << "Bits Per Sample: " << BitsPerSample << endl;
+	cout << "Audio Format:    " << AudioFormat.AudioFormat << endl;
+	cout << "Num Channels:    " << AudioFormat.NumChannels << endl;
+	cout << "Sample Rate:     " << AudioFormat.SampleRate << endl;
+	cout << "Byte Rate:       " << AudioFormat.ByteRate << endl;
+	cout << "Block Align:     " << AudioFormat.BlockAlign << endl;
+	cout << "Bits Per Sample: " << AudioFormat.BitsPerSample << endl;
 #endif 
 
-	if (AudioFormat != 1){
+	if (AudioFormat.AudioFormat != 1){
 #ifdef CONSOLEOUT
 		cout << "Compressed wavs no supported." << endl;
 #endif
 		return false;
 	}
 
+	SamplingRate = AudioFormat.SampleRate;
+	NumChannels = AudioFormat.NumChannels;
 
 	//Check for and skip non-data chunks
 	//ignoring the entire chunksize may be incorrect

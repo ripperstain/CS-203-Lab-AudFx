@@ -12,6 +12,15 @@ Sink
 };
 
 
+struct AudioFormatStruct{
+	unsigned short AudioFormat;
+	unsigned short NumChannels;
+	unsigned int SampleRate;
+	unsigned int ByteRate;
+	unsigned short BlockAlign;
+	unsigned short BitsPerSample;
+};
+
 /*\
 AbstractAudio is the base class for all devices to be used in the
 audio chain.  It provides the base implementation for negotiating sampling rate
@@ -40,6 +49,8 @@ public:
 	
 	void setNext(AbstractAudio *n) { next = n; }
 	void setPrevious(AbstractAudio *p) { previous = p; }
+
+	virtual AudioFormatStruct getAudioFormat();
 	
 protected:
 	//Methods to negotiate Sampling Rat and # Channels in Audio Chain

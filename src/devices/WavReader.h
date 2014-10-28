@@ -11,11 +11,14 @@ public:
 	WavReader(std::string fileName);
 	virtual void reset();
 	virtual bool initializeDecoder();
-	
+	AudioFormatStruct getAudioFormat(){ return AudioFormat; }
+
 protected:
 	virtual int getSamples(char* buffer, int length);
 private:
 	std::ifstream infile;
+	AudioFormatStruct AudioFormat;
+
 };
 
 #endif

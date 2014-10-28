@@ -3,6 +3,7 @@
 #include "base\unittest\AbstractAudioTest.h"
 #include "devices\WavReader.h"
 #include "devices\KaraokeProcessor.h"
+#include "devices\PCMPlayer.h"
 #include <iostream>
 
 using namespace std;
@@ -13,6 +14,7 @@ int main()
 	//AATestSource source("Source");
 	KaraokeProcessor processor("Processor");
 	AATestSink sink("Sink");
+	PCMPlayer player("Player");
 	WavReader reader("..\\..\\audio\\Yamaha-SY-35-Clarinet-C5.wav");
 
 	//Set up the links of our audio chain
