@@ -15,20 +15,30 @@ int main()
 	KaraokeProcessor processor("Processor");
 	AATestSink sink("Sink");
 	PCMPlayer player("Player");
-	WavReader reader("..\\..\\audio\\Yamaha-SY-35-Clarinet-C5.wav");
+	WavReader reader("..\\..\\audio\\norestforthewicked.wav");
 
 	//Set up the links of our audio chain
 	//Source is always the first device in the chain
 	//so it does not have a previous link
 	//Sink is always the last device in the chain
 	//so it does not have a next link
-	reader.setNext(&processor);
-	processor.setPrevious(&reader);
-	processor.setNext(&sink);
-	sink.setPrevious(&processor);
+	if (1){
+		reader.setNext(&player);
+		player.setPrevious(&reader);
+		devicelist devs = player.GetDevices();
+		for (auto it = devs.begin(); it != devs.end(); ++it){
+			wcout << *it << endl;
+		}
+		player.play();
+	}
+	else{
+		reader.setNext(&processor);
+		processor.setPrevious(&reader);
+		processor.setNext(&sink);
+		sink.setPrevious(&processor);
 
-	bool res = sink.RunTest();
-	
+		bool res = sink.RunTest();
+	}
 	cout << "Test completed." << endl;
 	system("pause");
 

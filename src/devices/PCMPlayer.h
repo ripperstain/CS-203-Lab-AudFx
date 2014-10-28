@@ -8,6 +8,7 @@ Properties->Linker->Input (set Configuration to All Configurations before changi
 */
 #include <Windows.h>
 #include <dsound.h>
+#include <thread>
 #include <atomic>
 
 #include <vector>
@@ -27,6 +28,8 @@ Define # of available audio blocks and the size of each block
 */
 #define BLOCK_SIZE 8192
 #define BLOCK_COUNT 3
+static void CALLBACK waveOutProc(HWAVEOUT hWaveOut, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+
 
 class PCMPlayer : public AbstractAudio
 {
@@ -35,6 +38,7 @@ public:
 	~PCMPlayer();
 	bool NegotiateParameters();
 	bool play();
+	void pause();
 	void stop();
 	//This method should never be called by a sink device
 	int getSamples(char* buffer, int length) { return 0; }
@@ -42,6 +46,7 @@ public:
 	devicelist GetDevices();
 	bool SelectDevice();
 
+	bool isPlaying();
 protected:
 	
 private:
@@ -50,14 +55,17 @@ private:
 	WAVEHDR waveBlocks[BLOCK_COUNT];
 	int waveCurrentBlock;
 	HWAVEOUT hwo; /* device handle */
+	AudioFormatStruct AudioFormat;
+	thread playThread;
 
 	/*
 	This is the counter to keep track of how many free blocks are available
 	STL atomic is used as the waveOutProc callback is called asynchronously.
 	*/
 	std::atomic<int> waveFreeBlockCount;
-
-	static void waveOutProc(HWAVEOUT hWaveOut, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+	std::atomic<bool> Playing;
+	std::atomic<bool> Paused;
+	void playBackground();
 	void writeAudio(HWAVEOUT hWaveOut, char* data, int size);
 
 };

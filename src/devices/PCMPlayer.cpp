@@ -1,46 +1,86 @@
 
 #include "PCMPlayer.h"
+#include <stdio.h>
 #include <sstream>
 #ifdef CONSOLEOUT
 #include <iostream>
 #endif
 
 using namespace std;
+
+PCMPlayer::PCMPlayer(string name) : AbstractAudio(name, AudioType::Sink)
+{
+	deviceNum = 0;
+	numDevices = waveOutGetNumDevs();
+	Playing.store(false);
+	Paused.store(false);
+
+	waveFreeBlockCount.store(BLOCK_COUNT);
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		waveBlocks[i].lpData = new char[BLOCK_SIZE];
+	}
+}
+
+PCMPlayer::~PCMPlayer()
+{
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		delete waveBlocks[i].lpData;
+	}
+}
+
 bool PCMPlayer::NegotiateParameters()
 {
 
-
+	return true;
 }
-
 
 bool PCMPlayer::play()
 {
-	if (!NegotiateParameters()){
-		return false;
-	}
-	if (previous == nullptr){
-		return false;
+
+	if (Playing.load()){
+		//Already playing
+		return;
 	}
 
-	AudioFormatStruct AudioFormat = previous->getAudioFormat();
-	char *buffer = new char[BLOCK_SIZE];
-	
+	Playing.store(true);
+	playBackground();
+
+	return true;
+
+}
+
+void PCMPlayer::stop()
+{
+	Playing.store(false);
+}
+
+void PCMPlayer::playBackground()
+{
+	if (!NegotiateParameters()){
+		return;
+	}
+	if (previous == nullptr){
+		return;
+	}
+
+	AudioFormat = previous->getAudioFormat();
+
 	//initialise current block index
 	waveCurrentBlock = 0;
 
-	
+
 	WAVEFORMATEX wf;
-	wf.nSamplesPerSec = AudioFormat.SampleRate; 
-	wf.wBitsPerSample = AudioFormat.BitsPerSample; 
-	wf.nChannels = AudioFormat.NumChannels; 
+	wf.nSamplesPerSec = AudioFormat.SampleRate;
+	wf.wBitsPerSample = AudioFormat.BitsPerSample;
+	wf.nChannels = AudioFormat.NumChannels;
 	wf.cbSize = 0; // unused
 	wf.wFormatTag = WAVE_FORMAT_PCM;
 	wf.nBlockAlign = (wf.wBitsPerSample * wf.nChannels) >> 3;
 	wf.nAvgBytesPerSec = wf.nBlockAlign * wf.nSamplesPerSec;
 	/*
-	 try to open the selected wave device (deviceNum)
-	 GetDevices & SelectDevice can be used to show the list
-	 of available devices and choose which you want to open
+	try to open the selected wave device (deviceNum)
+	GetDevices & SelectDevice can be used to show the list
+	of available devices and choose which you want to open
 	*/
 	MMRESULT res;
 	res = waveOutOpen(&hwo, deviceNum, &wf, (DWORD_PTR)&waveOutProc, (DWORD_PTR)&waveFreeBlockCount, CALLBACK_FUNCTION);
@@ -48,18 +88,20 @@ bool PCMPlayer::play()
 #ifdef CONSOLEOUT
 		cout << "Failed to open Wave Output Device." << endl;
 #endif
-		return false;
+		return;
 	}
 
 
 	int readCount = 0;
-	printf("buffersize: %i\n", BLOCK_SIZE);
+#ifdef CONSOLEOUT
+	cout << "buffersize: " << BLOCK_SIZE << endl;
+#endif
 
-
-	while (1) {
+	char *buffer = new char[BLOCK_SIZE];
+	while (Playing.load()) {
 		DWORD readBytes;
 		readBytes = previous->getSamples(buffer, BLOCK_SIZE);
-		
+
 		//Check if we've reached the end of the audio stream
 		//Two cases, completely empty buffer, or partially empty buffer
 		if (readBytes == 0){
@@ -70,14 +112,14 @@ bool PCMPlayer::play()
 			//Otherwise we can get a bit of noise at the end of the stream
 			memset(buffer + readBytes, 0, BLOCK_SIZE - readBytes);
 		}
-		
+
 		writeAudio(hwo, buffer, BLOCK_SIZE);
 	}
-	
+
 	//Wait until all blocks have been played
 	while (waveFreeBlockCount < BLOCK_COUNT)
 		Sleep(10);
-	
+
 	//Clean up
 	for (int i = 0; i < waveFreeBlockCount; i++)
 	if (waveBlocks[i].dwFlags & WHDR_PREPARED)
@@ -89,14 +131,7 @@ bool PCMPlayer::play()
 }
 
 
-void PCMPlayer::stop()
-{
-
-
-}
-
-
-void PCMPlayer::waveOutProc(HWAVEOUT hWaveOut, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
+static void CALLBACK waveOutProc(HWAVEOUT hWaveOut, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
 {
 	switch (uMsg){
 	case WOM_OPEN:
@@ -116,22 +151,6 @@ void PCMPlayer::waveOutProc(HWAVEOUT hWaveOut, UINT uMsg, DWORD dwInstance, DWOR
 
 }
 
-PCMPlayer::PCMPlayer(string name) : AbstractAudio(name, AudioType::Sink)
-{
-	deviceNum = 0;
-	numDevices = waveOutGetNumDevs();
-	waveFreeBlockCount.store(BLOCK_COUNT);
-	for (int i = 0; i < BLOCK_COUNT; i++){
-		waveBlocks[i].lpData = new char[BLOCK_SIZE];
-	}
-}
-
-PCMPlayer::~PCMPlayer()
-{
-	for (int i = 0; i < BLOCK_COUNT; i++){
-		delete waveBlocks[i].lpData;
-	}
-}
 
 devicelist PCMPlayer::GetDevices()
 {
@@ -144,7 +163,7 @@ devicelist PCMPlayer::GetDevices()
 		ws << caps.szPname;
 		devices.push_back(ws.str());
 	}
-
+	return devices;
 }
 
 

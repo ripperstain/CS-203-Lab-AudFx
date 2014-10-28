@@ -197,7 +197,7 @@ int getAudioBlock(ifstream &infile, char *data, int size)
 	int index = 0;
 	
 	infile.read(data, size);
-	index = infile.gcount();
+	index = (int)infile.gcount();
 
 	if (!infile){
 #ifdef CONSOLEOUT
