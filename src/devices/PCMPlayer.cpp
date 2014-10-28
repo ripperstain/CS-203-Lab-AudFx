@@ -39,7 +39,7 @@ bool PCMPlayer::play()
 
 	if (Playing.load()){
 		//Already playing
-		return;
+		return false;
 	}
 
 	Playing.store(true);

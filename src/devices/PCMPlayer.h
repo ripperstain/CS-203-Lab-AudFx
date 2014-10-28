@@ -56,7 +56,7 @@ private:
 	int waveCurrentBlock;
 	HWAVEOUT hwo; /* device handle */
 	AudioFormatStruct AudioFormat;
-	thread playThread;
+	std::thread playThread;
 
 	/*
 	This is the counter to keep track of how many free blocks are available
