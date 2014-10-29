@@ -42,22 +42,30 @@ bool PCMPlayer::NegotiateParameters()
 	return true;
 }
 
-bool PCMPlayer::play()
+void PCMPlayer::play()
 {
 
 	if (bPlaying.load()){
 		//Already playing
-		return true;
+		return;
 	}
+
+	/*
+	Initialize everything to start playing
+	audio from the start
+	*/
 	previous->reset();
 	bPlaying.store(true);
 	bPaused.store(false);
+
 	if (playThread.joinable()){
 		playThread.join();
 	}
+
+	//start playing audio in the background
 	playThread = thread(&PCMPlayer::playBackground, this);
 
-	return true;
+	return;
 
 }
 
@@ -118,6 +126,9 @@ void PCMPlayer::playBackground()
 	cout << "buffersize: " << BLOCK_SIZE << endl;
 #endif
 
+	//buffer used by getSamples
+	//data will be copied from this buffer into an available audio block
+	//to be written to output device
 	char *buffer = new char[BLOCK_SIZE];
 
 	//Get and play samples while bPlaying is true
@@ -143,6 +154,8 @@ void PCMPlayer::playBackground()
 			memset(buffer + readBytes, 0, BLOCK_SIZE - readBytes);
 		}
 
+
+		//Send audio data to output device
 		writeAudio(hwo, buffer, BLOCK_SIZE);
 
 		if (bPaused.load()){
@@ -239,6 +252,7 @@ void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, char* data, int size)
 	while (waveFreeBlockCount.load() == 0)
 		Sleep(10);
 
+	//if we're here, next block is avaiable for writing
 	//Increment current block (rolling back to first block when necessary)
 	waveCurrentBlock++;
 	waveCurrentBlock %= BLOCK_COUNT;
