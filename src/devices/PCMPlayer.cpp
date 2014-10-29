@@ -49,8 +49,12 @@ bool PCMPlayer::play()
 		//Already playing
 		return true;
 	}
-
+	previous->reset();
 	bPlaying.store(true);
+	bPaused.store(false);
+	if (playThread.joinable()){
+		playThread.join();
+	}
 	playThread = thread(&PCMPlayer::playBackground, this);
 
 	return true;
@@ -84,7 +88,7 @@ void PCMPlayer::playBackground()
 
 	//initialise current block index
 	waveCurrentBlock = 0;
-
+	waveFreeBlockCount.store(BLOCK_COUNT);
 
 	WAVEFORMATEX wf;
 	wf.nSamplesPerSec = AudioFormat.SampleRate;
@@ -133,6 +137,9 @@ void PCMPlayer::playBackground()
 		if (readBytes < BLOCK_SIZE) {
 			//Set the rest of the buffer to zeroes and play the partial buffer
 			//Otherwise we can get a bit of noise at the end of the stream
+#ifdef CONSOLEOUT
+			cout << "Partial buffer received: " << readBytes << " bytes." << endl;
+#endif
 			memset(buffer + readBytes, 0, BLOCK_SIZE - readBytes);
 		}
 
@@ -152,15 +159,22 @@ void PCMPlayer::playBackground()
 		}
 	}
 
-	//Wait until all blocks have been played
-	while (waveFreeBlockCount < BLOCK_COUNT)
-		Sleep(10);
+	if (bPlaying.load()){
+		//Wait until all blocks have been played
+		while (waveFreeBlockCount < BLOCK_COUNT)
+			Sleep(10);
+
+	}
+	else{
+		waveOutReset(hwo);
+	}
 
 	//Clean up
-	for (int i = 0; i < waveFreeBlockCount; i++)
-	if (waveBlocks[i].dwFlags & WHDR_PREPARED)
-		waveOutUnprepareHeader(hwo, &waveBlocks[i], sizeof(WAVEHDR));
-
+	for (int i = 0; i < waveFreeBlockCount; i++){
+		if (waveBlocks[i].dwFlags & WHDR_PREPARED)
+			waveOutUnprepareHeader(hwo, &waveBlocks[i], sizeof(WAVEHDR));
+	}
+	
 	waveOutClose(hwo);
 	delete buffer;
 	bPlaying.store(false);

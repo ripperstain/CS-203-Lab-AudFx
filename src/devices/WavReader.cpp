@@ -193,7 +193,7 @@ void getTag(ifstream& infile, string &tag)
 //Read in a block of Audio data (not for use reading header data)
 int getAudioBlock(ifstream &infile, char *data, int size)
 {
-	if (!infile) return -1;
+	if (!infile) return 0;
 	int index = 0;
 	
 	infile.read(data, size);
@@ -204,7 +204,7 @@ int getAudioBlock(ifstream &infile, char *data, int size)
 		cout << "Failed to read in audio data." << endl;
 		cout << "Only read in " << index << " bytes." << endl;
 #endif
-		return -1;
+		//return 0;
 	}
 
 	return index;
