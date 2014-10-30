@@ -23,10 +23,10 @@ int main()
 	//Sink is always the last device in the chain
 	//so it does not have a next link
 	if (1){
-		reader.setNext(&player);
-		//processor.setPrevious(&reader);
-		//processor.setNext(&player);
-		player.setPrevious(&reader);
+		reader.setNext(&processor);
+		processor.setPrevious(&reader);
+		processor.setNext(&player);
+		player.setPrevious(&processor);
 		devicelist devs = player.GetDevices();
 		for (auto it = devs.begin(); it != devs.end(); ++it){
 			wcout << *it << endl;
