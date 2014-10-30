@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
     <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
     <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp" />
+    <ClCompile Include="..\..\src\devices\Filters\GainFilter.cpp" />
     <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp" />
     <ClCompile Include="..\..\src\devices\PCMPlayer.cpp" />
     <ClCompile Include="..\..\src\devices\WavReader.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
     <ClInclude Include="..\..\src\base\Interfaces.h" />
     <ClInclude Include="..\..\src\base\unittest\AbstractAudioTest.h" />
+    <ClInclude Include="..\..\src\devices\Filters\GainFilter.h" />
     <ClInclude Include="..\..\src\devices\KaraokeProcessor.h" />
     <ClInclude Include="..\..\src\devices\PCMPlayer.h" />
     <ClInclude Include="..\..\src\devices\WavReader.h" />
