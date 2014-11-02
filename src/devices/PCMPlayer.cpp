@@ -16,9 +16,9 @@ PCMPlayer::PCMPlayer(string name) : AbstractAudio(name, AudioType::Sink)
 	bPaused.store(false);
 
 	waveFreeBlockCount.store(BLOCK_COUNT);
-	for (int i = 0; i < BLOCK_COUNT; i++){
-		waveBlocks[i].lpData = new char[BLOCK_SIZE];
-	}
+	//for (int i = 0; i < BLOCK_COUNT; i++){
+	//	waveBlocks[i].lpData = new char[BLOCK_SIZE];
+	//}
 }
 
 PCMPlayer::~PCMPlayer()
@@ -30,9 +30,7 @@ PCMPlayer::~PCMPlayer()
 	if (playThread.joinable()){
 		playThread.join();
 	}
-	for (int i = 0; i < BLOCK_COUNT; i++){
-		delete waveBlocks[i].lpData;
-	}
+
 }
 
 bool PCMPlayer::NegotiateParameters()
@@ -125,11 +123,21 @@ void PCMPlayer::playBackground()
 #ifdef CONSOLEOUT
 	cout << "buffersize: " << BLOCK_SIZE << endl;
 #endif
-
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		switch (AudioFormat.BitsPerSample){
+		case 8:
+			waveBlocks[i].lpData = new char[BLOCK_SIZE];
+			break;
+		case 16:
+			waveBlocks[i].lpData = new char[BLOCK_SIZE*2];
+			break;
+		}
+		
+	}
 	//buffer used by getSamples
 	//data will be copied from this buffer into an available audio block
 	//to be written to output device
-	char *buffer = new char[BLOCK_SIZE];
+	float buffer[BLOCK_SIZE];
 
 	//Get and play samples while bPlaying is true
 	//if stop() is called, it sets bPlaying to false and
@@ -189,7 +197,10 @@ void PCMPlayer::playBackground()
 	}
 	
 	waveOutClose(hwo);
-	delete buffer;
+	//delete buffer;
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		delete waveBlocks[i].lpData;
+	}
 	bPlaying.store(false);
 
 }
@@ -231,7 +242,7 @@ devicelist PCMPlayer::GetDevices()
 }
 
 
-void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, char* data, int size)
+void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 {
 	WAVEHDR* current = &waveBlocks[waveCurrentBlock];
 
@@ -239,9 +250,24 @@ void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, char* data, int size)
 	if (current->dwFlags & WHDR_PREPARED)
 		waveOutUnprepareHeader(hWaveOut, current, sizeof(WAVEHDR));
 
+	
 	//copy audio data into header, prepare, and write to device
-	memcpy(current->lpData, data, size);
-	current->dwBufferLength = size;
+	for (int i = 0; i < size; i++){
+		switch (AudioFormat.BitsPerSample){
+		case 8:
+			current->lpData[i] = data[i];
+			break;
+		case 16:
+			short tmp;
+			tmp = data[i];
+			current->lpData[i * 2] = (unsigned short)tmp;// >> 8;
+			current->lpData[1 + i * 2] = (unsigned short)tmp >> 8;
+			break;
+		}
+		
+	}
+
+	current->dwBufferLength = size * (AudioFormat.BitsPerSample / 8);
 	waveOutPrepareHeader(hWaveOut, current, sizeof(WAVEHDR));
 	waveOutWrite(hWaveOut, current, sizeof(WAVEHDR));
 

@@ -24,21 +24,21 @@ class AATestSource : public AbstractAudio
 {
 public:
 	AATestSource(std::string name);
-	virtual int getSamples(char* buffer, int length);
+	virtual int getSamples(float* buffer, int length);
 };
 
 class AATestProcessor : public AbstractAudio
 {
 public:
 	AATestProcessor(std::string name);
-	virtual int getSamples(char* buffer, int length);
+	virtual int getSamples(float* buffer, int length);
 };
 
 class AATestSink : public AbstractAudio
 {
 public:
 	AATestSink(std::string name);
-	virtual int getSamples(char* buffer, int length);
+	virtual int getSamples(float* buffer, int length);
 	bool RunTest();
 };
 

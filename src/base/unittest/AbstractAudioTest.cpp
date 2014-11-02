@@ -17,7 +17,7 @@ AATestSource::AATestSource(string name) : AbstractAudio(name, AudioType::Source)
 }
 
 
-int AATestSource::getSamples(char* buffer, int length)
+int AATestSource::getSamples(float* buffer, int length)
 {
 	//Generate some test samples here
 	for (int i = 0; i < length; i++){
@@ -38,7 +38,7 @@ AATestProcessor::AATestProcessor(string name) : AbstractAudio(name, AudioType::P
 
 }
 
-int AATestProcessor::getSamples(char* buffer, int length)
+int AATestProcessor::getSamples(float* buffer, int length)
 {
 	//Perform some simple test processing of samples here
 	int samplesReturned = previous->getSamples(buffer, length);
@@ -62,7 +62,7 @@ AATestSink::AATestSink(string name) : AbstractAudio(name, AudioType::Sink)
 
 }
 
-int AATestSink::getSamples(char* buffer, int length)
+int AATestSink::getSamples(float* buffer, int length)
 {
 
 	int samplesReturned = previous->getSamples(buffer, length);
@@ -87,8 +87,8 @@ bool AATestSink::RunTest()
 
 	//get samples and verify
 	const int bufsize = 10;
-	unsigned char* mybuf = new unsigned char[bufsize];
-	int samplesReturned = getSamples((char*)mybuf, bufsize);
+	float* mybuf = new float[bufsize];
+	int samplesReturned = getSamples(mybuf, bufsize);
 	
 	assert(samplesReturned == bufsize);
 

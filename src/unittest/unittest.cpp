@@ -19,6 +19,8 @@ int main()
 	PCMPlayer player("Player");
 	WavReader reader("..\\..\\audio\\norestforthewicked.wav");
 
+	processor.Disable();
+
 	//Set up the links of our audio chain
 	//Source is always the first device in the chain
 	//so it does not have a previous link
@@ -53,6 +55,12 @@ int main()
 				break;
 			case 'x':
 				stop = true;
+				break;
+			case 'k':
+				processor.Enable();
+				break;
+			case 'l':
+				processor.Disable();
 				break;
 			}
 		}
@@ -90,8 +98,8 @@ void testgain()
 
 	//get samples and verify
 	const int bufsize = 10;
-	unsigned char* mybuf = new unsigned char[bufsize];
-	int samplesReturned = gain1.getSamples((char*)mybuf, bufsize);
+	float* mybuf = new float[bufsize];
+	int samplesReturned = gain1.getSamples(mybuf, bufsize);
 
 	assert(samplesReturned == bufsize);
 

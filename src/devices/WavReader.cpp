@@ -31,15 +31,41 @@ void getLEInt(ifstream &infile, unsigned int& data);
 void getLEShort(ifstream &infile, unsigned short& data);
 //Read in a 4 byte ASCII tag (useful for RIFF, WAVE, and 'fmt ')
 void getTag(ifstream &infile, string &tag);
-//Read in a block of Audio data (not for use reading header data)
-int getAudioBlock(ifstream &infile, char *data, int size);
 
 
-int WavReader::getSamples(char* buffer, int length)
+int WavReader::get8bitSamples(float* buffer, int length)
+{
+	char* readbuf = new char[length];
+	int size = getAudioBlock(infile, readbuf, length);
+	for (int i = 0; i < size; i++){
+		buffer[i] = (float)readbuf[i];
+	}
+	return size;
+}
+
+int WavReader::get16bitSamples(float* buffer, int length)
+{
+	short* readbuf = new short[length];
+	int size = getAudioBlock(infile, readbuf, length);
+	for (int i = 0; i < size; i++){
+		buffer[i] = (float)readbuf[i];
+	}
+	return size;
+}
+
+int WavReader::getSamples(float* buffer, int length)
 {
 	memset(buffer, 0, length);
-	int size = getAudioBlock(infile, buffer, length);
-
+	//char* tmpbuffer = new char[length];
+	int size;// = getAudioBlock(infile, tmpbuffer, length);
+	switch (AudioFormat.BitsPerSample){
+	case 8:
+		size = get8bitSamples(buffer, length);
+		break;
+	case 16:
+		size = get16bitSamples(buffer, length);
+		break;
+	}
 	return size;
 	
 }
@@ -188,24 +214,4 @@ void getTag(ifstream& infile, string &tag)
 			tag += inchar;
 		}
 	}
-}
-
-//Read in a block of Audio data (not for use reading header data)
-int getAudioBlock(ifstream &infile, char *data, int size)
-{
-	if (!infile) return 0;
-	int index = 0;
-	
-	infile.read(data, size);
-	index = (int)infile.gcount();
-
-	if (!infile){
-#ifdef CONSOLEOUT
-		cout << "Failed to read in audio data." << endl;
-		cout << "Only read in " << index << " bytes." << endl;
-#endif
-		//return 0;
-	}
-
-	return index;
 }

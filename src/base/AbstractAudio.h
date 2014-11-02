@@ -41,7 +41,7 @@ public:
 	perform it's processing on those samples, and pass the processed samples on to
 	the device requesting samples from it
 	*/
-	virtual int getSamples(char* buffer, int length) = 0;
+	virtual int getSamples(float* buffer, int length) = 0;
 	
 	std::string getName() { return Name; }
 	bool getByPass() { return ByPass; }

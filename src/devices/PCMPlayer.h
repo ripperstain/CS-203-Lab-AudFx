@@ -77,7 +77,7 @@ public:
 
 	//This method should never be called on a sink device
 	//but it needs an implementation as all AbstractAudio devices do
-	int getSamples(char* buffer, int length) { return 0; }
+	int getSamples(float* buffer, int length) { return 0; }
 
 	devicelist GetDevices();
 	bool SelectDevice();
@@ -116,7 +116,7 @@ private:
 	play audio in the background
 	*/
 	void playBackground();
-	void writeAudio(HWAVEOUT hWaveOut, char* data, int size);
+	void writeAudio(HWAVEOUT hWaveOut, float* data, int size);
 
 };
 

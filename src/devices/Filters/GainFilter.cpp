@@ -12,7 +12,7 @@ GainFilter::GainFilter(string name) : AbstractAudio(name, AudioType::Processor)
 }
 
 
-int GainFilter::getSamples(char* buffer, int length)
+int GainFilter::getSamples(float* buffer, int length)
 {
 	//Perform some simple test processing of samples here
 	int samplesReturned = previous->getSamples(buffer, length);
