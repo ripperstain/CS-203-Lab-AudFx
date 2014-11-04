@@ -2,7 +2,7 @@
 
 #include "base\AbstractAudio.h"
 
-const int size=10;
+
 class GainFilter: public AbstractAudio
 {
 public:
