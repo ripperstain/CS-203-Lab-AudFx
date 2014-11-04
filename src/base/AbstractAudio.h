@@ -47,8 +47,8 @@ public:
 	bool getByPass() { return ByPass; }
 	void setByPass(bool b) { ByPass = b; }
 	
-	void setNext(AbstractAudio *n) { next = n; }
-	void setPrevious(AbstractAudio *p) { previous = p; }
+	virtual void setNext(AbstractAudio *n) { next = n; }
+	virtual void setPrevious(AbstractAudio *p) { previous = p; }
 
 	virtual AudioFormatStruct getAudioFormat();
 	virtual void reset(){}
