@@ -84,7 +84,7 @@ void testgain()
 {
 
 	//Testing if the gain filter modifies values 
-	//miltiplier: 2
+	//multiplier: 2
 	float g;
 	g = 2;
 
@@ -94,6 +94,7 @@ void testgain()
 	source.setNext(&gain1);
 	gain1.setPrevious(&source);
 
+	//gain is set to test multiplier
 	gain1.setgain(g);
 
 	//get samples and verify
