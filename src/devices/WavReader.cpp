@@ -36,9 +36,10 @@ void getTag(ifstream &infile, string &tag);
 int WavReader::get8bitSamples(float* buffer, int length)
 {
 	char* readbuf = new char[length];
-	int size = getAudioBlock(infile, readbuf, length);
+	int size = getAudioBlock(readbuf, length);
+	//Now we normalize data to the float range of 1.0 to -1.0
 	for (int i = 0; i < size; i++){
-		buffer[i] = (float)readbuf[i];
+		buffer[i] = (float(readbuf[i]) -offset) / offset;
 	}
 	return size;
 }
@@ -46,9 +47,10 @@ int WavReader::get8bitSamples(float* buffer, int length)
 int WavReader::get16bitSamples(float* buffer, int length)
 {
 	short* readbuf = new short[length];
-	int size = getAudioBlock(infile, readbuf, length);
+	int size = getAudioBlock(readbuf, length);
+	//Now we normalize data to the float range of 1.0 to -1.0
 	for (int i = 0; i < size; i++){
-		buffer[i] = (float)readbuf[i];
+		buffer[i] = float(readbuf[i]) / offset;
 	}
 	return size;
 }
@@ -147,6 +149,14 @@ bool WavReader::initializeDecoder()
 #endif
 		return false;
 	}
+
+	if (AudioFormat.BitsPerSample == 8){
+		signedNative = false;
+	}
+	else{
+		signedNative = true;
+	}
+	offset = 1 << (AudioFormat.BitsPerSample - 1);
 
 	SamplingRate = AudioFormat.SampleRate;
 	NumChannels = AudioFormat.NumChannels;

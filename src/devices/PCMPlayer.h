@@ -91,6 +91,10 @@ private:
 	int numDevices;
 	WAVEHDR waveBlocks[BLOCK_COUNT]; /* array of wave headers */
 	int waveCurrentBlock; /* currently available audio buffer */
+
+	bool signedNative;
+	unsigned int offset;
+
 	HWAVEOUT hwo; /* device handle */
 	AudioFormatStruct AudioFormat;
 	std::thread playThread;

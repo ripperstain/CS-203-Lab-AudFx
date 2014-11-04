@@ -134,6 +134,15 @@ void PCMPlayer::playBackground()
 		}
 		
 	}
+
+	if (AudioFormat.BitsPerSample == 8){
+		signedNative = false;
+	}
+	else{
+		signedNative = true;
+	}
+	offset = 1 << (AudioFormat.BitsPerSample - 1);
+
 	//buffer used by getSamples
 	//data will be copied from this buffer into an available audio block
 	//to be written to output device
@@ -253,13 +262,27 @@ void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 	
 	//copy audio data into header, prepare, and write to device
 	for (int i = 0; i < size; i++){
+		//First, clip input to the range 1.0 : -1.0
+		//In case any intermediate device left values outside the range
+		if (data[i] > 0){
+			if (data[i] > 1.0F){
+				data[i] = 1.0F;
+			}
+		}
+		else{
+			if (data[i] < -1.0F){
+				data[i] = -1.0F;
+			}
+		}
+
+		//Now convert back to native format
 		switch (AudioFormat.BitsPerSample){
 		case 8:
-			current->lpData[i] = data[i];
+			current->lpData[i] = (data[i] *offset) + offset;
 			break;
 		case 16:
 			short tmp;
-			tmp = data[i];
+			tmp = data[i] * offset;
 			current->lpData[i * 2] = (unsigned short)tmp;// >> 8;
 			current->lpData[1 + i * 2] = (unsigned short)tmp >> 8;
 			break;
