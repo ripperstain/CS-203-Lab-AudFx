@@ -1,4 +1,5 @@
 #include "WavReader.h"
+#include "../support/SampleConverter.h"
 #include <iostream>
 
 
@@ -38,9 +39,10 @@ int WavReader::get8bitSamples(float* buffer, int length)
 	char* readbuf = new char[length];
 	int size = getAudioBlock(readbuf, length);
 	//Now we normalize data to the float range of 1.0 to -1.0
-	for (int i = 0; i < size; i++){
+	SampleConverter::convertUCharToFloat((unsigned char*)readbuf, buffer, size);
+	/*for (int i = 0; i < size; i++){
 		buffer[i] = (float(readbuf[i]) -offset) / offset;
-	}
+	}*/
 	return size;
 }
 
@@ -48,10 +50,11 @@ int WavReader::get16bitSamples(float* buffer, int length)
 {
 	short* readbuf = new short[length];
 	int size = getAudioBlock(readbuf, length);
+	SampleConverter::convertShortToFloat(readbuf, buffer, size);
 	//Now we normalize data to the float range of 1.0 to -1.0
-	for (int i = 0; i < size; i++){
+	/*for (int i = 0; i < size; i++){
 		buffer[i] = float(readbuf[i]) / offset;
-	}
+	}*/
 	return size;
 }
 

@@ -1,5 +1,6 @@
 
 #include "PCMPlayer.h"
+#include "../support/SampleConverter.h"
 #include <stdio.h>
 #include <sstream>
 #ifdef CONSOLEOUT
@@ -275,21 +276,20 @@ void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 			}
 		}
 
-		//Now convert back to native format
-		switch (AudioFormat.BitsPerSample){
-		case 8:
-			current->lpData[i] = (data[i] *offset) + offset;
-			break;
-		case 16:
-			short tmp;
-			tmp = data[i] * offset;
-			current->lpData[i * 2] = (unsigned short)tmp;// >> 8;
-			current->lpData[1 + i * 2] = (unsigned short)tmp >> 8;
-			break;
-		}
+
 		
 	}
 
+	//Now convert back to native format
+	switch (AudioFormat.BitsPerSample){
+	case 8:
+		SampleConverter::convertFloatToUChar((unsigned char*)current->lpData, data, size);
+		break;
+	case 16:
+		SampleConverter::convertFloatToShort(data, (short*)current->lpData, size);
+		break;
+	}
+	
 	current->dwBufferLength = size * (AudioFormat.BitsPerSample / 8);
 	waveOutPrepareHeader(hWaveOut, current, sizeof(WAVEHDR));
 	waveOutWrite(hWaveOut, current, sizeof(WAVEHDR));
