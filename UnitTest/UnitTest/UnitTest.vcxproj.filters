@@ -45,6 +45,9 @@
     <ClCompile Include="..\..\src\support\SampleConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\unittest\signalgenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\base\AbstractAudio.h">
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\support\SampleConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\unittest\signalgenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\src\devices\PCMPlayer.cpp" />
     <ClCompile Include="..\..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\..\src\support\SampleConverter.cpp" />
+    <ClCompile Include="..\..\src\unittest\signalgenerator.cpp" />
     <ClCompile Include="..\..\src\unittest\unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +103,7 @@
     <ClInclude Include="..\..\src\devices\PCMPlayer.h" />
     <ClInclude Include="..\..\src\devices\WavReader.h" />
     <ClInclude Include="..\..\src\support\SampleConverter.h" />
+    <ClInclude Include="..\..\src\unittest\signalgenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\audio\Yamaha-SY-35-Clarinet-C5.wav" />
