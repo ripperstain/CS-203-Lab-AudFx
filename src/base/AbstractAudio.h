@@ -64,6 +64,7 @@ protected:
 	
 	//Methods to set negotiated values to all devices in the chain
 	void SetSamplingRateRecursive(int rate);
+	void SetBufferSizeRecursive(int bufferSize);
 	void SetChannelsRecursive(int ch);
 
 
@@ -74,7 +75,7 @@ protected:
 	AudioType Type;
 	unsigned int SamplingRate;
 	unsigned short NumChannels;
-	
+	unsigned int BufferSize;
 	bool SamplingRateFrozen, NumChannelsFrozen, ByPass;
 
 };

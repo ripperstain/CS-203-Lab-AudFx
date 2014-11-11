@@ -133,3 +133,11 @@ void AbstractAudio::SetChannelsRecursive(int ch)
 	NumChannels = ch;
 	NumChannelsFrozen = true;
 }
+
+void AbstractAudio::SetBufferSizeRecursive(int bufferSize)
+{
+	if (previous != nullptr){
+		previous->SetBufferSizeRecursive(bufferSize);
+	}
+	BufferSize = bufferSize;
+}

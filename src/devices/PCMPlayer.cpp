@@ -38,6 +38,7 @@ bool PCMPlayer::NegotiateParameters()
 {
 	NegotiateSamplingRate();
 	NegotiateNumberOfChannels();
+	SetBufferSizeRecursive(BLOCK_SIZE);
 	return true;
 }
 
