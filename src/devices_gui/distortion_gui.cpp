@@ -15,16 +15,17 @@ DistortionGUI::DistortionGUI(wxWindow* parent, wxWindowID id,
 	//Create 'wrap' for Distortion GUI element
 	wrap = new wxStaticBox(this, wxID_ANY, wxT("Distortion Filter"));
 
-
 	//Set up the sizer for the panel
 	sizer = new wxStaticBoxSizer(wrap, wxVERTICAL);
-
 
 	//Create the enabled/disabled checkbox
 	chkEnabled = new wxCheckBox(this, wxID_ANY, wxT("&Enabled"), wxDefaultPosition, wxDefaultSize);
 	chkEnabled->SetValue(true);
-	sizer->Add(chkEnabled);
+	sizer->Add(chkEnabled, 0, 0, 4);
+
 	//Create the 'Drive' slider input for the distortion level
+	wxStaticText* drvLabel = new wxStaticText(this, wxID_ANY, wxT("  Drive"));
+	sizer->Add(drvLabel, 0, wxALIGN_CENTER, 10);
 	DriveControl = new wxSlider(this, wxID_ANY, 20, 10, 40, wxDefaultPosition, wxDefaultSize, wxSL_VERTICAL | wxSL_LABELS);
 	sizer->Add(DriveControl, 0, wxALIGN_CENTER, 5);
 

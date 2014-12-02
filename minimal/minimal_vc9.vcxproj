@@ -123,30 +123,32 @@
     <IntDir>vc_mswud\minimal\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>C:\Users\jhaskell\Documents\wxWidgets302\include\msvc;C:\Users\jhaskell\Documents\wxWidgets302\include;../src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\jhaskell\Documents\wxWidgets302\lib\vc_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\wxWidget302lib\include\msvc;..\wxWidget302lib\include;../src;$(IncludePath)</IncludePath>
+    <LibraryPath>..\wxWidget302lib\vc_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>vc_mswu\</OutDir>
     <IntDir>vc_mswu\minimal\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>C:\Users\jhaskell\Documents\wxWidgets302\include\msvc;C:\Users\jhaskell\Documents\wxWidgets302\include;../src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\jhaskell\Documents\wxWidgets302\lib\vc_lib\mswu;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\wxWidget302lib\include\msvc;..\wxWidget302lib\include;../src;$(IncludePath)</IncludePath>
+    <LibraryPath>..\wxWidget302lib\vc_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL Debug|Win32'">
     <OutDir>vc_mswuddll\</OutDir>
     <IntDir>vc_mswuddll\minimal\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>C:\Users\jhaskell\Documents\wxWidgets302\include\msvc;C:\Users\jhaskell\Documents\wxWidgets302\include;../src;$(IncludePath)</IncludePath>
+    <IncludePath>..\wxWidget302lib\include\msvc;..\wxWidget302lib\include;../src;$(IncludePath)</IncludePath>
+    <LibraryPath>..\wxWidget302lib\vc_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL Release|Win32'">
     <OutDir>vc_mswudll\</OutDir>
     <IntDir>vc_mswudll\minimal\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>C:\Users\jhaskell\Documents\wxWidgets302\include\msvc;C:\Users\jhaskell\Documents\wxWidgets302\include;../src;$(IncludePath)</IncludePath>
+    <IncludePath>..\wxWidget302lib\include\msvc;..\wxWidget302lib\include;../src;$(IncludePath)</IncludePath>
+    <LibraryPath>..\wxWidget302lib\vc_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>vc_mswud_x64\</OutDir>
@@ -180,7 +182,7 @@
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\..\..\lib\vc_lib\mswud;.\..\..\include;.;.\..\..\samples;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\wxWidget302lib\vc_lib\mswud;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -221,7 +223,7 @@
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>.\..\..\lib\vc_lib\mswu;.\..\..\include;.;.\..\..\samples;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\wxWidget302lib\vc_lib\mswu;.\..\..\include;.;.\..\..\samples;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
