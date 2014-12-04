@@ -175,8 +175,12 @@ MyFrame::MyFrame(const wxString& title)
     SetStatusText("Welcome to wxWidgets!");
 #endif // wxUSE_STATUSBAR
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-	distort = new DistortionGUI(this, wxID_ANY);
-	sizer->Add(distort, 0, 0, 10);
+
+	//for (int i = 0; i < 6; i++){
+		distort = new DistortionGUI(this, wxID_ANY);
+		sizer->Add(distort, 0, 0, 10);
+
+	//}
 	SetSizer(sizer);
 	sizer->Fit(this);
 	sizer->SetSizeHints(this);

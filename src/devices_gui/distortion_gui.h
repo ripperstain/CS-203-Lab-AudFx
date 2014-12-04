@@ -17,12 +17,17 @@ public:
 	AbstractAudio* getDevice();
 	void setDevice(DistortionFilter* device);
 
+	void OnchkEnable(wxCommandEvent& e);
+	void OnDriveAdjust(wxCommandEvent& e);
+
 private:
 	DistortionFilter* filter;
 	wxStaticBoxSizer* sizer;
 	wxStaticBox* wrap;
 	wxCheckBox* chkEnabled;
 	wxSlider* DriveControl;
+
+	DECLARE_EVENT_TABLE()
 };
 
 #endif
