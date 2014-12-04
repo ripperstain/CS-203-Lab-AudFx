@@ -6,6 +6,7 @@ using namespace std;
 
 DistortionFilter::DistortionFilter(string name) : AbstractAudio(name, AudioType::Processor), gain("mygain")
 {
+	Enabled = true;
 	distort = 2.0F;
 
 	//Default mix to 80% distorted signal, 20% original
@@ -29,25 +30,26 @@ int DistortionFilter::getSamples(float* buffer, int length)
 	
 	int samplesReturned = previous->getSamples(buffer, length);
 	
-	
-	for (int i = 0; i < samplesReturned; i++){
-		//Process each sample
-		float sample = buffer[i];
-		float q = sample / abs(sample);
-		float z = q * (1 - exp(distort * sample * sample / abs(sample)));
+	if (Enabled){
+		for (int i = 0; i < samplesReturned; i++){
+			//Process each sample
+			float sample = buffer[i];
+			float q = sample / abs(sample);
+			float z = q * (1 - exp(distort * sample * sample / abs(sample)));
 
-		//mix distorted signal with original
-		sample = z * mix + sample * (1 - mix);
+			//mix distorted signal with original
+			sample = z * mix + sample * (1.0f - mix);
 
-		/*if (sample > drive){
-			sample = drive;
+			/*if (sample > drive){
+				sample = drive;
+				}
+				else if (sample < -drive){
+				sample = -drive;
+				}*/
+
+			buffer[i] = sample;
+
 		}
-		else if (sample < -drive){
-			sample = -drive;
-		}*/
-
-		buffer[i] = sample;
-
 	}
 
 	return samplesReturned;

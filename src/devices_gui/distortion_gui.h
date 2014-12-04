@@ -19,13 +19,15 @@ public:
 
 	void OnchkEnable(wxCommandEvent& e);
 	void OnDriveAdjust(wxCommandEvent& e);
+	void OnMixAdjust(wxCommandEvent& e);
 
 private:
 	DistortionFilter* filter;
 	wxStaticBoxSizer* sizer;
 	wxStaticBox* wrap;
 	wxCheckBox* chkEnabled;
-	wxSlider* DriveControl;
+	wxSlider* DriveSlider;
+	wxSlider* MixSlider;
 
 	DECLARE_EVENT_TABLE()
 };

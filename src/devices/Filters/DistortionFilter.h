@@ -21,7 +21,10 @@ public:
 	virtual void setNext(AbstractAudio *n);
 	virtual void setPrevious(AbstractAudio *p);
 
+	void Enable(bool enabled){ Enabled = enabled; }
+	bool isEnabled(){ return Enabled; }
 private:
+	bool Enabled;
 	float distort, mix;
 	GainFilter gain;
 
