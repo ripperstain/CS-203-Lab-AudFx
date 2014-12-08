@@ -2,6 +2,7 @@
 #include "cassert"
 #include "base\unittest\AbstractAudioTest.h"
 #include "devices\WavReader.h"
+#include "devices\MicrophoneReader.h"
 #include "devices\KaraokeProcessor.h"
 #include "devices\PCMPlayer.h"
 #include "devices\Filters\GainFilter.h"
@@ -17,8 +18,8 @@ int main()
 	KaraokeProcessor processor("Processor");
 	AATestSink sink("Sink");
 	PCMPlayer player("Player");
-	WavReader reader("..\\..\\audio\\norestforthewicked.wav");
-
+	//WavReader reader("..\\..\\audio\\norestforthewicked.wav");
+	MicrophoneReader reader("Recorder");
 	processor.Disable();
 
 	//Set up the links of our audio chain
@@ -32,10 +33,11 @@ int main()
 		processor.setPrevious(&reader);
 		processor.setNext(&player);
 		player.setPrevious(&processor);
-		devicelist devs = player.GetDevices();
+		/*devicelist devs = reader.GetDevices();
 		for (auto it = devs.begin(); it != devs.end(); ++it){
 			wcout << *it << endl;
-		}
+		}*/
+		reader.record();
 		player.play();
 		char cmd;
 		bool stop = false;

@@ -14,8 +14,6 @@ Properties->Linker->Input (set Configuration to All Configurations before changi
 #include <vector>
 #include <string>
 
-typedef std::vector<std::wstring> devicelist;
-
 /*
 PCMPLayer will initialize a Windows Wave Output Device and feed blocks of audio to it.
 When the device finishes playing a block of audio, it will seamlessly transition to playing

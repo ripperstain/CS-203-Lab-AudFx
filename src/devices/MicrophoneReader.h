@@ -6,6 +6,7 @@
 #include <dsound.h>
 #include <thread>
 #include <atomic>
+#include <mutex>
 
 static void CALLBACK waveInProc(HWAVEIN hWaveIn, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 
@@ -15,20 +16,35 @@ public:
 	MicrophoneReader(std::string name);
 	~MicrophoneReader();
 
-	void initializeRecorder();
+	
+	int getSamples(float* buffer, int length);
+	
+	devicelist GetDevices();
+	//bool SelectDevice();
+	AudioFormatStruct getAudioFormat(){ return AudioFormat; }
 
-	int getSamples(float* buffer, int length) { return 0; }// Cast char buffer to short
+	void record();
+	void stop();
 
 private:
 	int deviceNum;
 	int numDevices;
-	int NUMPTS; //Frequency * recording length in seconds
-	int sampleRate;  //Frequency
+	AudioFormatStruct AudioFormat;
+
+	float sampleCache[BLOCK_SIZE];
+	void clearCache();
 
 	HWAVEIN hWaveIn;
 	WAVEHDR WaveInHdr[BLOCK_COUNT];
 	MMRESULT result;
 
-	std::thread recordThread;
+	bool initializeRecorder();
 
+	std::thread recordThread;
+	std::atomic<int> isRecording;
+	std::atomic<int> waveFreeBlockCounter;
+	std::atomic<int> waveCurrentBlockIndex;
+
+	std::mutex sampleMutex;
+	void recordBackground();
 };

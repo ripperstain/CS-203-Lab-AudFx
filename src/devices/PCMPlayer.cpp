@@ -13,10 +13,11 @@ PCMPlayer::PCMPlayer(string name) : AbstractAudio(name, AudioType::Sink)
 {
 	deviceNum = 0;
 	numDevices = waveOutGetNumDevs();
-	bPlaying.store(false);
-	bPaused.store(false);
 
-	waveFreeBlockCount.store(BLOCK_COUNT);
+	atomic_init(&bPlaying, false);
+	atomic_init(&bPaused, false);
+
+	atomic_init(&waveFreeBlockCount, BLOCK_COUNT);
 	//for (int i = 0; i < BLOCK_COUNT; i++){
 	//	waveBlocks[i].lpData = new char[BLOCK_SIZE];
 	//}

@@ -2,6 +2,7 @@
 #define ABSTRACTAUDIO_H
 
 #include <string>
+#include <vector>
 
 enum class AudioType{
 NoType,
@@ -20,6 +21,9 @@ struct AudioFormatStruct{
 	unsigned short BlockAlign;
 	unsigned short BitsPerSample;
 };
+
+
+typedef std::vector<std::wstring> devicelist;
 
 /*\
 AbstractAudio is the base class for all devices to be used in the

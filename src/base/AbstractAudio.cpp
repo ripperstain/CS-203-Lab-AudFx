@@ -31,11 +31,11 @@ AudioFormatStruct AbstractAudio::getAudioFormat()
 //Methods to negotiate Sampling Rat and # Channels in Audio Chain
 void AbstractAudio::NegotiateSamplingRate()
 {
-	if(next != nullptr){
-		next->NegotiateSamplingRate();
+	if (previous != nullptr){
+		previous->NegotiateSamplingRate();
 	}else{
 		int min = 11025;
-		int max = 44000;
+		int max = 44100;
 		int preferred = 11025;
 		
 		MinMaxSamplingRate(min, max, preferred);
@@ -48,8 +48,8 @@ void AbstractAudio::NegotiateSamplingRate()
 
 void AbstractAudio::NegotiateNumberOfChannels()
 {
-	if(next != nullptr){
-		next->NegotiateNumberOfChannels();
+	if (previous != nullptr){
+		previous->NegotiateNumberOfChannels();
 	}else{
 		int min = 1;
 		int max = 1000;

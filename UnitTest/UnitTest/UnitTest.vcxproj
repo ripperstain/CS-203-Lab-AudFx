@@ -86,6 +86,7 @@
     <ClCompile Include="..\..\src\devices\Filters\DistortionFilter.cpp" />
     <ClCompile Include="..\..\src\devices\Filters\GainFilter.cpp" />
     <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp" />
+    <ClCompile Include="..\..\src\devices\MicrophoneReader.cpp" />
     <ClCompile Include="..\..\src\devices\PCMPlayer.cpp" />
     <ClCompile Include="..\..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\..\src\support\SampleConverter.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="..\..\src\devices\Filters\DistortionFilter.h" />
     <ClInclude Include="..\..\src\devices\Filters\GainFilter.h" />
     <ClInclude Include="..\..\src\devices\KaraokeProcessor.h" />
+    <ClInclude Include="..\..\src\devices\MicrophoneReader.h" />
     <ClInclude Include="..\..\src\devices\PCMPlayer.h" />
     <ClInclude Include="..\..\src\devices\WavReader.h" />
     <ClInclude Include="..\..\src\support\SampleConverter.h" />
