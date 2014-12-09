@@ -518,6 +518,7 @@
     <ClInclude Include="..\src\devices\Filters\GainFilter.h" />
     <ClInclude Include="..\src\devices\KaraokeProcessor.h" />
     <ClInclude Include="..\src\devices_gui\distortion_gui.h" />
+    <ClInclude Include="..\src\devices_gui\GainFilterGUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
