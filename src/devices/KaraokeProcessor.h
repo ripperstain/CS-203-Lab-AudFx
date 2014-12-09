@@ -12,6 +12,9 @@ public:
 	void Disable(){ Enabled = false; }
 	bool isEnabled(){ return Enabled; }
 
+	virtual void setNext(AbstractAudio *n);
+	virtual void setPrevious(AbstractAudio *p);
+
 private:
 	bool Enabled;
 
