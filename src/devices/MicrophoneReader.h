@@ -20,7 +20,7 @@ public:
 	int getSamples(float* buffer, int length);
 	
 	devicelist GetDevices();
-	//bool SelectDevice();
+	bool SelectDevice(int deviceNum);
 	AudioFormatStruct getAudioFormat(){ return AudioFormat; }
 
 	void record();

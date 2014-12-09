@@ -57,6 +57,12 @@ devicelist MicrophoneReader::GetDevices()
 	return devices;
 }
 
+bool MicrophoneReader::SelectDevice(int deviceNum)
+{
+
+	return false;
+}
+
 void MicrophoneReader::record()
 {
 	if (isRecording.load()){
