@@ -44,6 +44,7 @@
 // private classes
 // ----------------------------------------------------------------------------
 #include "devices_gui/distortion_gui.h"
+#include "KaraokeGUI.h"
 
 // Define a new application type, each program should derive a class from wxApp
 class MyApp : public wxApp
@@ -73,6 +74,7 @@ private:
     // any class wishing to process wxWidgets events must use this macro
     wxDECLARE_EVENT_TABLE();
 	DistortionGUI* distort;
+	KaraokeGUI* karaoke;
 };
 
 // ----------------------------------------------------------------------------
@@ -179,6 +181,8 @@ MyFrame::MyFrame(const wxString& title)
 	//for (int i = 0; i < 6; i++){
 		distort = new DistortionGUI(this, wxID_ANY);
 		sizer->Add(distort, 0, 0, 10);
+		karaoke = new KaraokeGUI(this, wxID_ANY);
+		sizer->Add(karaoke, 0, 0, 10);
 
 	//}
 	SetSizer(sizer);

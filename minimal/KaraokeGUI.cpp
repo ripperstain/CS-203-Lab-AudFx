@@ -29,18 +29,6 @@ const wxPoint& pos, KaraokeProcessor* device)
 	chkEnabled->SetValue(true);
 
 	wxFlexGridSizer* tmpSizer = new wxFlexGridSizer(2, 2, 0, 0);
-	//Create the slider inputs for the Karaoke filter (drive and mix)
-
-	/* ****** NOTE******
-	Had trouble with the driver slider overlapping the Mix slider value
-	Setting border didn't have any effect
-	Added padding spaces to Drive and Mix labels to force the spacing and
-	remove the overlap
-	*/
-	wxStaticText* drvLabel = new wxStaticText(this, wxID_ANY, wxT("  Drive    "));
-	tmpSizer->Add(drvLabel, 0, wxALIGN_CENTER, 10);
-	wxStaticText* mixLabel = new wxStaticText(this, wxID_ANY, wxT("    Mix  "));
-	tmpSizer->Add(mixLabel, 0, wxALIGN_CENTER, 10);
 
 
 	sizer->Add(tmpSizer, 0, wxALIGN_CENTER, 5);
