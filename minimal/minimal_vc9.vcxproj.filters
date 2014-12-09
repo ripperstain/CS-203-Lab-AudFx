@@ -44,5 +44,8 @@
     <ClInclude Include="..\src\devices\Filters\GainFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\devices_gui\GainFilterGUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
