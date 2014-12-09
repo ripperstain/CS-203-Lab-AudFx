@@ -32,6 +32,7 @@ private:
 	AudioFormatStruct AudioFormat;
 
 	float sampleCache[BLOCK_SIZE];
+	volatile int samplesRecorded;
 	void clearCache();
 
 	HWAVEIN hWaveIn;

@@ -169,14 +169,14 @@ void PCMPlayer::playBackground()
 			//Set the rest of the buffer to zeroes and play the partial buffer
 			//Otherwise we can get a bit of noise at the end of the stream
 #ifdef CONSOLEOUT
-			cout << "Partial buffer received: " << readBytes << " bytes." << endl;
+			//cout << "Partial buffer received: " << readBytes << " bytes." << endl;
 #endif
-			memset(buffer + readBytes, 0, BLOCK_SIZE - readBytes);
+			//memset(buffer + readBytes, 0, BLOCK_SIZE - readBytes);
 		}
 
 
 		//Send audio data to output device
-		writeAudio(hwo, buffer, BLOCK_SIZE);
+		writeAudio(hwo, buffer, readBytes);
 
 		if (bPaused.load()){
 			waveOutPause(hwo);

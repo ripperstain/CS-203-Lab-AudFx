@@ -56,7 +56,7 @@ maintain seemless playing.
 /*
 Define # of available audio blocks and the size of each block
 */
-#define BLOCK_SIZE 8192
+#define BLOCK_SIZE 4096
 #define BLOCK_COUNT 3
 
 //Callback from audio device to let Player know when a block of audio has finished playing (and that buffer is
