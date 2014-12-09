@@ -41,7 +41,7 @@ int KaraokeProcessor::getSamples(float* buffer, int length){
 
 void KaraokeProcessor::setNext(AbstractAudio *n)
 {
-	gain.setNext(n);
+	this->next = n;
 }
 
 void KaraokeProcessor::setPrevious(AbstractAudio *p)

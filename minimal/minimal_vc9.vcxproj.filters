@@ -30,6 +30,15 @@
     <ClCompile Include="..\src\devices\Filters\GainFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\devices\KaraokeProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KaraokeGUI.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KaraokeGUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\devices_gui\distortion_gui.h">
@@ -42,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\devices\Filters\GainFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\devices\KaraokeProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

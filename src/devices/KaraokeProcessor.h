@@ -8,8 +8,7 @@ public:
 	KaraokeProcessor(std::string name);
 	virtual int getSamples(float* buffer, int length);
 
-	void Enable(){ Enabled = true; }
-	void Disable(){ Enabled = false; }
+	void Enable(bool enabled){ Enabled = enabled; }
 	bool isEnabled(){ return Enabled; }
 
 	virtual void setNext(AbstractAudio *n);

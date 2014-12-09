@@ -506,13 +506,17 @@
     <ClCompile Include="..\src\base\AbstractAudio.cpp" />
     <ClCompile Include="..\src\devices\Filters\DistortionFilter.cpp" />
     <ClCompile Include="..\src\devices\Filters\GainFilter.cpp" />
+    <ClCompile Include="..\src\devices\KaraokeProcessor.cpp" />
     <ClCompile Include="..\src\devices_gui\distortion_gui.cpp" />
+    <ClCompile Include="KaraokeGUI.h" />
+    <ClCompile Include="KaraokeGUI.cpp" />
     <ClCompile Include="minimal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\base\AbstractAudio.h" />
     <ClInclude Include="..\src\devices\Filters\DistortionFilter.h" />
     <ClInclude Include="..\src\devices\Filters\GainFilter.h" />
+    <ClInclude Include="..\src\devices\KaraokeProcessor.h" />
     <ClInclude Include="..\src\devices_gui\distortion_gui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
