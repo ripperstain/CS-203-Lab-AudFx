@@ -154,3 +154,9 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+AudioInGUI/vc_mswud/minimal.exe
+AudioInGUI/vc_mswud/minimal.exe
+AudioInGUI/vc_mswud/minimal/minimal.tlog/cl.command.1.tlog
+*.tlog
+minimal/vc_mswu/minimal.exe
+*.lastbuildstate

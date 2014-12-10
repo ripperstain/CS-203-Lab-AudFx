@@ -14,7 +14,7 @@ public:
 	DistortionGUI(wxWindow* parent, wxWindowID id, 
 		const wxPoint& pos = wxDefaultPosition, DistortionFilter* device = nullptr);
 
-	AbstractAudio* getDevice();
+	DistortionFilter* getDevice();
 	void setDevice(DistortionFilter* device);
 
 	void OnchkEnable(wxCommandEvent& e);

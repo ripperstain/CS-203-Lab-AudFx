@@ -9,7 +9,8 @@ using namespace std;
 
 MicrophoneReader::MicrophoneReader(string name) : AbstractAudio(name, AudioType::Source)
 {
-	deviceNum = 0;
+	deviceNum = WAVE_MAPPER;
+	numDevices = waveInGetNumDevs();
 	NumChannels = 1;
 	SamplingRate = 44100;
 	AudioFormat.NumChannels = NumChannels;
@@ -45,7 +46,6 @@ int MicrophoneReader::getSamples(float* buffer, int length)
 devicelist MicrophoneReader::GetDevices()
 {
 	devicelist devices;
-	numDevices = waveInGetNumDevs();
 
 	for (int i = 0; i < numDevices; i++){
 		WAVEINCAPS caps;
@@ -57,9 +57,12 @@ devicelist MicrophoneReader::GetDevices()
 	return devices;
 }
 
-bool MicrophoneReader::SelectDevice(int deviceNum)
+bool MicrophoneReader::SelectDevice(int devnum)
 {
-
+	if (devnum >= 0 && devnum < numDevices){
+		deviceNum = devnum;
+		return true;
+	}
 	return false;
 }
 
@@ -121,7 +124,7 @@ bool MicrophoneReader::initializeRecorder()
 	pFormat.wBitsPerSample = AudioFormat.BitsPerSample;
 	pFormat.cbSize = 0;
 
-	result = waveInOpen(&hWaveIn, WAVE_MAPPER, &pFormat, (DWORD_PTR)&waveInProc, (DWORD_PTR)&waveFreeBlockCounter, CALLBACK_FUNCTION);
+	result = waveInOpen(&hWaveIn, deviceNum, &pFormat, (DWORD_PTR)&waveInProc, (DWORD_PTR)&waveFreeBlockCounter, CALLBACK_FUNCTION);
 
 	if (result != MMSYSERR_NOERROR) {
 #ifdef CONSOLEOUT

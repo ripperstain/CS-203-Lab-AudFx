@@ -71,7 +71,7 @@ void AudioInGUI::setDevice(MicrophoneReader* device)
 
 void AudioInGUI::OnDeviceSelect(wxCommandEvent& e)
 {
-	filter->SelectDevice(0);
+	filter->SelectDevice(e.GetSelection());
 }
 
 void AudioInGUI::OnRecord(wxCommandEvent& e)
