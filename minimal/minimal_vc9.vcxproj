@@ -507,6 +507,7 @@
     <ClCompile Include="..\src\devices\Filters\DistortionFilter.cpp" />
     <ClCompile Include="..\src\devices\Filters\GainFilter.cpp" />
     <ClCompile Include="..\src\devices_gui\distortion_gui.cpp" />
+    <ClCompile Include="..\src\devices_gui\OpenFile_gui.cpp" />
     <ClCompile Include="minimal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +515,7 @@
     <ClInclude Include="..\src\devices\Filters\DistortionFilter.h" />
     <ClInclude Include="..\src\devices\Filters\GainFilter.h" />
     <ClInclude Include="..\src\devices_gui\distortion_gui.h" />
+    <ClInclude Include="..\src\devices_gui\OpenFile_gui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

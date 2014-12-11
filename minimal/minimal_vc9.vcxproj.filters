@@ -30,6 +30,9 @@
     <ClCompile Include="..\src\devices\Filters\GainFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\devices_gui\OpenFile_gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\devices_gui\distortion_gui.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\devices\Filters\GainFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\devices_gui\OpenFile_gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
