@@ -21,7 +21,7 @@ const wxPoint& pos)
 
 	wxStaticText* drvLabel = new wxStaticText(this, wxID_ANY, wxT("File: "));
 	tmpSizer->Add(drvLabel, 0, wxALIGN_CENTER, 10);
-	wxStaticText* mixLabel = new wxStaticText(this, wxID_ANY, wxT(""));
+	wxStaticText* mixLabel = new wxStaticText(this, wxID_ANY, CurrentDocPath);
 	tmpSizer->Add(mixLabel, 0, wxALIGN_CENTER, 10);
 	wxButton* openFileDialog = new wxButton(this, wxFD_OPEN, wxT("..."));
 	tmpSizer->Add(openFileDialog, 0, wxALIGN_CENTER, 10);
