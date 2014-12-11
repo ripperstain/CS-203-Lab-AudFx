@@ -78,7 +78,7 @@ public:
 	int getSamples(float* buffer, int length) { return 0; }
 
 	devicelist GetDevices();
-	bool SelectDevice();
+	bool SelectDevice(int num);
 
 	bool isPlaying() { return bPlaying.load(); }
 protected:

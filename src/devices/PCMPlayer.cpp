@@ -253,7 +253,14 @@ devicelist PCMPlayer::GetDevices()
 	return devices;
 }
 
-
+bool PCMPlayer::SelectDevice(int num)
+{
+	if (num >= 0 && num < numDevices){
+		deviceNum = num;
+		return true;
+	}
+	return false;
+}
 void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 {
 	WAVEHDR* current = &waveBlocks[waveCurrentBlock];
@@ -300,7 +307,7 @@ void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 	waveFreeBlockCount--;
 
 	//Wait loop for when no blocks are free
-	while (waveFreeBlockCount.load() == 0)
+	while (waveFreeBlockCount.load() == 0 && bPlaying.load())
 		Sleep(10);
 
 	//if we're here, next block is avaiable for writing
