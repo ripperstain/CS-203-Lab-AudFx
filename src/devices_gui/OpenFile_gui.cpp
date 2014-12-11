@@ -19,10 +19,10 @@ const wxPoint& pos)
 	wxFlexGridSizer* tmpSizer = new wxFlexGridSizer(4, 3, 2, 0);
 
 
-	wxStaticText* drvLabel = new wxStaticText(this, wxID_ANY, wxT("File: "));
-	tmpSizer->Add(drvLabel, 0, wxALIGN_CENTER, 10);
-	wxStaticText* mixLabel = new wxStaticText(this, wxID_ANY, CurrentDocPath);
-	tmpSizer->Add(mixLabel, 0, wxALIGN_CENTER, 10);
+	wxStaticText* fileLabel = new wxStaticText(this, wxID_ANY, wxT("File: "));
+	tmpSizer->Add(fileLabel, 0, wxALIGN_CENTER, 10);
+	wxStaticText* pathLabel = new wxStaticText(this, wxID_ANY, CurrentDocPath, wxDefaultPosition, wxSize(150,16));
+	tmpSizer->Add(pathLabel, 0, wxALIGN_CENTER, 10);
 	wxButton* openFileDialog = new wxButton(this, wxFD_OPEN, wxT("..."));
 	tmpSizer->Add(openFileDialog, 0, wxALIGN_CENTER, 10);
 
@@ -47,4 +47,9 @@ void OpenFileGUI::OpenFile(wxCommandEvent& e)
 	{
 		CurrentDocPath = OpenDialog->GetPath();
 	}
+}
+
+void UpdatePath()
+{
+	
 }
