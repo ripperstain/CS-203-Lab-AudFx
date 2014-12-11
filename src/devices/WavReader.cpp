@@ -191,6 +191,11 @@ bool WavReader::initializeDecoder()
 
 }
 
+void  WavReader::selectFile(std::string filename)
+{
+	FileName = filename;
+	reset();
+}
 
 //Read in a Little Endian Unsigned Int (4 bytes)
 void getLEInt(ifstream& infile, unsigned int& data)

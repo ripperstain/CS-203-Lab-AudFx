@@ -45,6 +45,7 @@
 // ----------------------------------------------------------------------------
 #include "devices_gui/KaraokeGUI.h"
 #include "devices_gui/PlaybackGUI.h"
+#include "devices_gui/OpenFile_gui.h"
 #include "devices/WavReader.h"
 
 // Define a new application type, each program should derive a class from wxApp
@@ -74,6 +75,7 @@ public:
 private:
     // any class wishing to process wxWidgets events must use this macro
     wxDECLARE_EVENT_TABLE();
+	OpenFileGUI* fileSelector;
 	KaraokeGUI* karaoke;
 	PlaybackGUI* player;
 	wxStaticText *txtDrive, *txtMix;
@@ -183,9 +185,11 @@ MyFrame::MyFrame(const wxString& title)
     SetStatusText("Welcome to wxWidgets!");
 #endif // wxUSE_STATUSBAR
 
-	reader = new WavReader("..\\audio\\norestforthewicked.wav");
+	//reader = new WavReader("..\\audio\\norestforthewicked.wav");
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-
+	fileSelector = new OpenFileGUI(this, wxID_ANY);
+	sizer->Add(fileSelector, 0, 0, 10);
+	reader = fileSelector->getDevice();
 	karaoke = new KaraokeGUI(this, wxID_ANY);
 	sizer->Add(karaoke, 0, 0, 10);
 	player = new PlaybackGUI(this, wxID_ANY);
