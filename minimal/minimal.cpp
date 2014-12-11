@@ -45,7 +45,7 @@
 // ----------------------------------------------------------------------------
 #include "devices_gui/distortion_gui.h"
 #include "devices_gui/OpenFile_gui.h"
-#include "KaraokeGUI.h"
+#include "devices_gui/KaraokeGUI.h"
 
 // Define a new application type, each program should derive a class from wxApp
 class MyApp : public wxApp
@@ -190,8 +190,8 @@ MyFrame::MyFrame(const wxString& title)
 	sizer->Add(distort, 0, 0, 10);
 	open = new OpenFileGUI(this, wxID_ANY);
 	sizer->Add(open, 0, 0, 10);
-	//karaoke = new KaraokeGUI(this, wxID_ANY);
-	//sizer->Add(karaoke, 0, 0, 10);
+	karaoke = new KaraokeGUI(this, wxID_ANY);
+	sizer->Add(karaoke, 0, 0, 10);
 
 	//GUI to verify distortion filter values were set by distortion GUI
 	txtDrive = new wxStaticText(this, wxID_STATIC, wxT("Drive: "), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT);
