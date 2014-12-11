@@ -509,6 +509,7 @@
     <ClCompile Include="..\src\devices\PCMPlayer.cpp" />
     <ClCompile Include="..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\src\devices_gui\KaraokeGUI.cpp" />
+    <ClCompile Include="..\src\devices_gui\OpenFile_gui.cpp" />
     <ClCompile Include="..\src\devices_gui\PlaybackGUI.cpp" />
     <ClCompile Include="..\src\support\SampleConverter.cpp" />
     <ClCompile Include="minimal.cpp" />
@@ -521,6 +522,7 @@
     <ClInclude Include="..\src\devices\PCMPlayer.h" />
     <ClInclude Include="..\src\devices\WavReader.h" />
     <ClInclude Include="..\src\devices_gui\KaraokeGUI.h" />
+    <ClInclude Include="..\src\devices_gui\OpenFile_gui.h" />
     <ClInclude Include="..\src\devices_gui\PlaybackGUI.h" />
     <ClInclude Include="..\src\support\SampleConverter.h" />
   </ItemGroup>

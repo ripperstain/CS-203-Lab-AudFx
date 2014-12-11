@@ -1,4 +1,5 @@
 #include "OpenFile_gui.h"
+#include "string"
 
 const int ID_DRIVESLIDER = 120;
 const int ID_MIXSLIDER = 121;
@@ -10,8 +11,11 @@ OpenFileGUI::OpenFileGUI(wxWindow* parent, wxWindowID id,
 const wxPoint& pos)
 : wxPanel(parent, id, pos, wxSize(400, 100), wxSTATIC_BORDER, wxT("Open File"))
 {
+
+	reader = new WavReader("");
+
 	//Create 'wrap' for Open File GUI element
-	wrap = new wxStaticBox(this, wxID_ANY, wxT("Open File"),wxDefaultPosition,wxSize(400,100));
+	wrap = new wxStaticBox(this, wxID_ANY, wxT("Open File"),wxDefaultPosition,wxDefaultSize);
 
 	//Set up the sizer for the panel
 	sizer = new wxStaticBoxSizer(wrap, wxVERTICAL);
@@ -35,6 +39,19 @@ const wxPoint& pos)
 	sizer->SetSizeHints(this);
 }
 
+WavReader* OpenFileGUI::getDevice()
+{
+	return reader;
+}
+
+void OpenFileGUI::setDevice(WavReader* device)
+{
+	if (device != nullptr){
+		reader = device;
+	}
+}
+
+
 void OpenFileGUI::OpenFile(wxCommandEvent& e)
 {
 	wxFileDialog *OpenDialog = new wxFileDialog(
@@ -46,5 +63,6 @@ void OpenFileGUI::OpenFile(wxCommandEvent& e)
 	if (OpenDialog->ShowModal() == wxID_OK) // if the user click "Open" instead of "cancel"
 	{
 		CurrentDocPath = OpenDialog->GetPath();
+		reader->selectFile(std::string(CurrentDocPath.mb_str()));
 	}
 }

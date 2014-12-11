@@ -12,6 +12,7 @@ public:
 	virtual void reset();
 	virtual bool initializeDecoder();
 	AudioFormatStruct getAudioFormat(){ return AudioFormat; }
+	void selectFile(std::string filename);
 
 protected:
 	virtual int getSamples(float* buffer, int length);
