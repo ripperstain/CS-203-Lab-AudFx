@@ -18,9 +18,9 @@ int main()
 	KaraokeProcessor processor("Processor");
 	AATestSink sink("Sink");
 	PCMPlayer player("Player");
-	//WavReader reader("..\\..\\audio\\norestforthewicked.wav");
-	MicrophoneReader reader("Recorder");
-	processor.Disable();
+	WavReader reader("..\\..\\audio\\norestforthewicked.wav");
+	//MicrophoneReader reader("Recorder");
+	processor.Enable(false);
 
 	//Set up the links of our audio chain
 	//Source is always the first device in the chain
@@ -37,7 +37,7 @@ int main()
 		for (auto it = devs.begin(); it != devs.end(); ++it){
 			wcout << *it << endl;
 		}*/
-		reader.record();
+		//reader.record();
 		player.play();
 		char cmd;
 		bool stop = false;
@@ -59,10 +59,10 @@ int main()
 				stop = true;
 				break;
 			case 'k':
-				processor.Enable();
+				processor.Enable(true);
 				break;
 			case 'l':
-				processor.Disable();
+				processor.Enable(false);
 				break;
 			}
 		}

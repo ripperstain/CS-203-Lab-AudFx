@@ -38,3 +38,13 @@ int KaraokeProcessor::getSamples(float* buffer, int length){
 	}
 	return samplesReturned;
 }
+
+void KaraokeProcessor::setNext(AbstractAudio *n)
+{
+	this->next = n;
+}
+
+void KaraokeProcessor::setPrevious(AbstractAudio *p)
+{
+	this->previous = p;
+}

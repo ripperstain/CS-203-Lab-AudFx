@@ -57,7 +57,7 @@ DistortionGUI::DistortionGUI(wxWindow* parent, wxWindowID id,
 	sizer->SetSizeHints(this);
 }
 
-AbstractAudio* DistortionGUI::getDevice()
+DistortionFilter* DistortionGUI::getDevice()
 {
 	return filter;
 }

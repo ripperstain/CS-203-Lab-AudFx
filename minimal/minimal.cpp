@@ -45,6 +45,7 @@
 // ----------------------------------------------------------------------------
 #include "devices_gui/distortion_gui.h"
 #include "devices_gui/OpenFile_gui.h"
+#include "KaraokeGUI.h"
 
 // Define a new application type, each program should derive a class from wxApp
 class MyApp : public wxApp
@@ -69,12 +70,17 @@ public:
     // event handlers (these functions should _not_ be virtual)
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
-
+	void OnGetValues(wxCommandEvent& event);
 private:
     // any class wishing to process wxWidgets events must use this macro
     wxDECLARE_EVENT_TABLE();
 	DistortionGUI* distort;
 	OpenFileGUI* open;
+	KaraokeGUI* karaoke;
+	wxStaticText *txtDrive, *txtMix;
+	wxStaticBoxSizer *staticSizer;
+
+	void SetValues();
 };
 
 // ----------------------------------------------------------------------------
@@ -103,6 +109,7 @@ enum
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Minimal_Quit,  MyFrame::OnQuit)
     EVT_MENU(Minimal_About, MyFrame::OnAbout)
+	EVT_BUTTON(wxID_ANY, MyFrame::OnGetValues)
 wxEND_EVENT_TABLE()
 
 // Create a new application object: this macro will allow wxWidgets to create
@@ -178,12 +185,27 @@ MyFrame::MyFrame(const wxString& title)
 #endif // wxUSE_STATUSBAR
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
-	//for (int i = 0; i < 6; i++){
-		distort = new DistortionGUI(this, wxID_ANY);
-		sizer->Add(distort, 0, 0, 10);
-		open = new OpenFileGUI(this, wxID_ANY);
-		sizer->Add(open, 0, 0, 10);
-	//}
+
+	distort = new DistortionGUI(this, wxID_ANY);
+	sizer->Add(distort, 0, 0, 10);
+	open = new OpenFileGUI(this, wxID_ANY);
+	sizer->Add(open, 0, 0, 10);
+	//karaoke = new KaraokeGUI(this, wxID_ANY);
+	//sizer->Add(karaoke, 0, 0, 10);
+
+	//GUI to verify distortion filter values were set by distortion GUI
+	txtDrive = new wxStaticText(this, wxID_STATIC, wxT("Drive: "), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT);
+	txtMix = new wxStaticText(this, wxID_STATIC, wxT("Mix: "), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT); 
+
+	wxStaticBox *filterBox = new wxStaticBox(this, wxID_ANY, wxT("Filter Values"));
+	staticSizer = new wxStaticBoxSizer(filterBox, wxVERTICAL);
+	
+	staticSizer->Add(new wxButton(this, wxID_ANY, wxT("Get Filter Values"), wxDefaultPosition), 0, wxALIGN_CENTER, 5);
+	staticSizer->Add(txtDrive, 0, wxALIGN_LEFT, 5);
+	staticSizer->Add(txtMix, 0, wxALIGN_LEFT, 5);
+
+	sizer->Add(staticSizer, 0, 0, 10);
+
 	SetSizer(sizer);
 	sizer->Fit(this);
 	sizer->SetSizeHints(this);
@@ -212,4 +234,18 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
                  "About wxWidgets minimal sample",
                  wxOK | wxICON_INFORMATION,
                  this);
+}
+
+void MyFrame::OnGetValues(wxCommandEvent& event)
+{
+	SetValues();
+}
+
+void MyFrame::SetValues()
+{
+	//Get values directly from Distortion filter and display via labels
+	float tmp = distort->getDevice()->GetDistort();
+	txtDrive->SetLabelText(wxString::Format("Drive: %f", tmp));
+	tmp = distort->getDevice()->GetMix();
+	txtMix->SetLabelText(wxString::Format("Mix: %f", tmp));
 }
