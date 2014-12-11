@@ -160,3 +160,5 @@ AudioInGUI/vc_mswud/minimal/minimal.tlog/cl.command.1.tlog
 *.tlog
 minimal/vc_mswu/minimal.exe
 *.lastbuildstate
+PlayerGUI/vc_mswu/minimal.exe
+PlayerGUI/vc_mswud/minimal.exe
