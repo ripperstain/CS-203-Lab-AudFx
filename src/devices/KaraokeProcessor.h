@@ -1,3 +1,4 @@
+#pragma once;
 #include "base\AbstractAudio.h"
 #include "cassert"
 

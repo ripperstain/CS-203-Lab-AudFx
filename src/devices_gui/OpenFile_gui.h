@@ -1,3 +1,5 @@
+#ifndef OPENFILE_GUI_H
+#define OPENFILE_GUI_H
 
 #include "wx/wx.h"
 #include "wx/checkbox.h"
@@ -28,3 +30,4 @@ private:
 	DECLARE_EVENT_TABLE()
 };
 
+#endif
