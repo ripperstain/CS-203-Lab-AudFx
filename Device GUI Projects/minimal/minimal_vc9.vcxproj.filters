@@ -18,48 +18,69 @@
     <ClCompile Include="minimal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\devices_gui\distortion_gui.cpp">
+    <ClCompile Include="..\..\src\base\AbstractAudio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\base\AbstractAudio.cpp">
+    <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\devices\Filters\DistortionFilter.cpp">
+    <ClCompile Include="..\..\src\devices\Filters\DistortionFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\devices\Filters\GainFilter.cpp">
+    <ClCompile Include="..\..\src\devices\Filters\GainFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\devices_gui\OpenFile_gui.cpp">
+    <ClCompile Include="..\..\src\devices_gui\distortion_gui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\devices_gui\KaraokeGUI.cpp">
+    <ClCompile Include="..\..\src\devices_gui\KaraokeGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\devices\KaraokeProcessor.cpp">
+    <ClCompile Include="..\..\src\devices_gui\OpenFile_gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\devices\WavReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\support\SampleConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\devices_gui\distortion_gui.h">
+    <ClInclude Include="..\..\src\base\AbstractAudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\base\AbstractAudio.h">
+    <ClInclude Include="..\..\src\devices\KaraokeProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\devices\Filters\DistortionFilter.h">
+    <ClInclude Include="..\..\src\devices\Filters\DistortionFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\devices\Filters\GainFilter.h">
+    <ClInclude Include="..\..\src\devices\Filters\GainFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\devices_gui\OpenFile_gui.h">
+    <ClInclude Include="..\..\src\devices_gui\distortion_gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\devices_gui\KaraokeGUI.h">
+    <ClInclude Include="..\..\src\devices_gui\KaraokeGUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\devices\KaraokeProcessor.h">
+    <ClInclude Include="..\..\src\devices_gui\OpenFile_gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\devices\WavReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\support\SampleConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\base\AudioFileDecoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\base\Interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
