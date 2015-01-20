@@ -1,6 +1,6 @@
 #pragma once;
 
-#include "base\AbstractAudio.h"
+#include "../../base/AbstractAudio.h"
 
 
 class GainFilter: public AbstractAudio

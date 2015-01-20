@@ -1,7 +1,7 @@
 #ifndef ABSTRACTAUDIOTEST_H
 #define ABSTRACTAUDIOTEST_H
 
-#include "base\AbstractAudio.h"
+#include "../AbstractAudio.h"
 #include "cassert"
 
 /*
