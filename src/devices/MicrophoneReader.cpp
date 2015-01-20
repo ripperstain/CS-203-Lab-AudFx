@@ -16,6 +16,8 @@ MicrophoneReader::MicrophoneReader(string name) : AbstractAudio(name, AudioType:
 	AudioFormat.NumChannels = NumChannels;
 	AudioFormat.SampleRate = SamplingRate;
 	AudioFormat.BitsPerSample = 16;
+	AudioFormat.ByteRate = SamplingRate * (AudioFormat.BitsPerSample / 8) * NumChannels;
+	AudioFormat.BlockAlign = 2;
 	clearCache();
 	samplesRecorded = 0;
 
@@ -120,7 +122,7 @@ bool MicrophoneReader::initializeRecorder()
 	pFormat.nChannels = 1;
 	pFormat.nSamplesPerSec = SamplingRate;
 	pFormat.nAvgBytesPerSec = 2 * SamplingRate;
-	pFormat.nBlockAlign = 2;
+	pFormat.nBlockAlign = AudioFormat.BlockAlign;
 	pFormat.wBitsPerSample = AudioFormat.BitsPerSample;
 	pFormat.cbSize = 0;
 
