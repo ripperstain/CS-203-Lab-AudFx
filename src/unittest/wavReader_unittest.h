@@ -14,5 +14,6 @@ class WavReaderTest : public UnitTestInterface
 	std::string TestName() { return "WavReader Unit Test"; }
 	bool RunTest();
 };
-class
+
+
 #endif
