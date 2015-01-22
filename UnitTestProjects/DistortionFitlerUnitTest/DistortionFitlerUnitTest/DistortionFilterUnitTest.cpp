@@ -10,13 +10,16 @@ using namespace std;
 
 int main(){
 
-	AATestSource source("Source");
+	AATestSourceDistortion source("Source");
 
 	DistortionFilter distortion("Distortion");
 
+	source.setNext(&distortion);
+	distortion.setPrevious(&source);
+
 	const int bufferSize = 20;
 	float samples[bufferSize];
-	int numSamples = source.getSamples(samples, bufferSize);
+	
 
 	distortion.SetMix(.5);
 
@@ -29,6 +32,30 @@ int main(){
 	distortion.SetDistort(2.0);
 
 	assert(distortion.GetDistort() == 2.0);
+
+	distortion.Enable(true);
+
+	assert(distortion.isEnabled() == true);
+
+	int distortSamples = distortion.getSamples(samples, bufferSize);
+
+	assert(distortSamples == bufferSize);
+
+	for (int i = 0; i < bufferSize; i++)
+	{
+
+		float testsample;
+		if ((i % 2) == 0) testsample = -1;
+		else testsample = 1;
+		float q = testsample / abs(testsample);
+		float z = q * (1 - exp(2.0 * testsample * testsample / abs(testsample)));
+		testsample = z * .5 + testsample * (1.0 - .5);
+
+		assert(testsample == samples[i]);
+	}
+
+
+	cout << "Distortion Filter Unit Test Complete" << endl;
 
 	system("pause");
 

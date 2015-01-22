@@ -27,6 +27,13 @@ public:
 	virtual int getSamples(float* buffer, int length);
 };
 
+class AATestSourceDistortion : public AbstractAudio
+{
+public:
+	AATestSourceDistortion(std::string name);
+	virtual int getSamples(float* buffer, int length);
+};
+
 class AATestProcessor : public AbstractAudio
 {
 public:

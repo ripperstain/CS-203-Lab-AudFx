@@ -26,6 +26,31 @@ int AATestSource::getSamples(float* buffer, int length)
 	return length;
 }
 
+/********************************************
+
+Methods for AATestSourceDistortion
+
+*********************************************/
+AATestSourceDistortion::AATestSourceDistortion(string name) : AbstractAudio(name, AudioType::Source)
+{
+	//Use nonvalid values here for test purposes
+	SamplingRate = 40404;
+	NumChannels = 77;
+
+}
+
+
+int AATestSourceDistortion::getSamples(float* buffer, int length)
+{
+	//Generate some test samples here 1 and -1
+
+	for (int i = 0; i < length; i++){
+		if ((i % 2) == 0) buffer[i] = -1;
+		else buffer[i] = 1;
+	}
+	return length;
+}
+
 
 /********************************************
 
