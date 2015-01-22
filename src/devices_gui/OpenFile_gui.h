@@ -12,13 +12,14 @@ class OpenFileGUI : public wxPanel
 public:
 	OpenFileGUI(wxWindow* parent, wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition);
+	wxTextCtrl* pathLabel;
+
 
 	WavReader* getDevice();
 	void setDevice(WavReader* device);
-
 	void OpenFile(wxCommandEvent& e);
 
-	wxString CurrentDocPath;
+	wxString CurrentDocPath = "No File Selected";
 
 private:
 	WavReader *reader;

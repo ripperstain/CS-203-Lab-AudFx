@@ -25,10 +25,12 @@ const wxPoint& pos)
 
 	wxStaticText* fileLabel = new wxStaticText(this, wxID_ANY, wxT("File: "));
 	tmpSizer->Add(fileLabel, 0, wxALIGN_CENTER, 10);
-	wxStaticText* pathLabel = new wxStaticText(this, wxID_ANY, CurrentDocPath, wxDefaultPosition, wxSize(150,16));
+
+	pathLabel = new wxTextCtrl(this, wxID_ANY, CurrentDocPath, wxDefaultPosition, wxDefaultSize);
 	tmpSizer->Add(pathLabel, 0, wxALIGN_CENTER, 10);
-	wxButton* openFileDialog = new wxButton(this, wxFD_OPEN, wxT("..."));
-	tmpSizer->Add(openFileDialog, 0, wxALIGN_CENTER, 10);
+
+	wxButton *openFileDialog = new wxButton(this, wxFD_OPEN, wxT("Browse"));
+	tmpSizer->Add(openFileDialog, 0, wxALIGN_CENTER, 7);
 
 
 	sizer->Add(tmpSizer, 0, wxALIGN_CENTER, 5);
@@ -63,11 +65,7 @@ void OpenFileGUI::OpenFile(wxCommandEvent& e)
 	if (OpenDialog->ShowModal() == wxID_OK) // if the user click "Open" instead of "cancel"
 	{
 		CurrentDocPath = OpenDialog->GetPath();
+		pathLabel->SetValue(CurrentDocPath);
 		reader->selectFile(std::string(CurrentDocPath.mb_str()));
 	}
-}
-
-void UpdatePath()
-{
-	
 }
