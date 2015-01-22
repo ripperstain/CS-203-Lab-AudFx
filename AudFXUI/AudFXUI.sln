@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AudFXUI", "AudFXUI\AudFXUI.vcxproj", "{4405D444-6FA1-48EE-9694-DCB8DDBB74B7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AudFXUI", "AudFXUI\AudFXUI.vcxproj", "{03E1D1F9-46CE-4D7E-B242-10FEC32348F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4405D444-6FA1-48EE-9694-DCB8DDBB74B7}.Debug|Win32.ActiveCfg = Debug|Win32
-		{4405D444-6FA1-48EE-9694-DCB8DDBB74B7}.Debug|Win32.Build.0 = Debug|Win32
-		{4405D444-6FA1-48EE-9694-DCB8DDBB74B7}.Release|Win32.ActiveCfg = Release|Win32
-		{4405D444-6FA1-48EE-9694-DCB8DDBB74B7}.Release|Win32.Build.0 = Release|Win32
+		{03E1D1F9-46CE-4D7E-B242-10FEC32348F5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03E1D1F9-46CE-4D7E-B242-10FEC32348F5}.Debug|Win32.Build.0 = Debug|Win32
+		{03E1D1F9-46CE-4D7E-B242-10FEC32348F5}.Release|Win32.ActiveCfg = Release|Win32
+		{03E1D1F9-46CE-4D7E-B242-10FEC32348F5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
