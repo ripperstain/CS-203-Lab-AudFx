@@ -137,7 +137,7 @@ bool MyApp::OnInit()
         return false;
 
     // create the main application window
-    MyFrame *frame = new MyFrame("Minimal wxWidgets App");
+    MyFrame *frame = new MyFrame("AudFX");
 
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
@@ -182,7 +182,7 @@ MyFrame::MyFrame(const wxString& title)
 #if wxUSE_STATUSBAR
     // create a status bar just for fun (by default with 1 pane only)
     CreateStatusBar(2);
-    SetStatusText("Welcome to wxWidgets!");
+    SetStatusText("AudFX GUI");
 #endif // wxUSE_STATUSBAR
 
 	//reader = new WavReader("..\\audio\\norestforthewicked.wav");
@@ -221,14 +221,13 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxMessageBox(wxString::Format
                  (
-                    "Welcome to %s!\n"
+                    "Welcome to AudFX!\n"
                     "\n"
-                    "This is the minimal wxWidgets sample\n"
-                    "running under %s.",
-                    wxVERSION_STRING,
+                    "A Real Time Audio Manipulation and Playing Application.\n"
+                    "Running under %s.",
                     wxGetOsDescription()
                  ),
-                 "About wxWidgets minimal sample",
+                 "About AudFX",
                  wxOK | wxICON_INFORMATION,
                  this);
 }
