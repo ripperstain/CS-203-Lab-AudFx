@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D48C4742-2F26-42B8-BB4C-DCCAC9527CC6}</ProjectGuid>
-    <RootNamespace>SaveSinkUnitTest</RootNamespace>
+    <ProjectGuid>{70EA2BE4-0510-43C4-970B-17FC0C33B17E}</ProjectGuid>
+    <RootNamespace>Sorting</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,19 +64,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\base\AbstractAudio.cpp" />
-    <ClCompile Include="..\..\..\src\base\AudioFileDecoder.cpp" />
-    <ClCompile Include="..\..\..\src\devices\SaveSink.cpp" />
-    <ClCompile Include="..\..\..\src\devices\WavReader.cpp" />
-    <ClCompile Include="..\..\..\src\support\SampleConverter.cpp" />
-    <ClCompile Include="..\..\..\src\unittest\SaveSinkUnitTest.cpp" />
+    <ClInclude Include="..\..\..\..\..\..\Downloads\Sorting\MergeSort.h" />
+    <ClInclude Include="..\..\..\..\..\..\Downloads\Sorting\QuickSort.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\base\AbstractAudio.h" />
-    <ClInclude Include="..\..\..\src\base\AudioFileDecoder.h" />
-    <ClInclude Include="..\..\..\src\devices\SaveSink.h" />
-    <ClInclude Include="..\..\..\src\devices\WavReader.h" />
-    <ClInclude Include="..\..\..\src\support\SampleConverter.h" />
+    <ClCompile Include="..\..\..\..\..\..\Downloads\Sorting\TestDriver.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

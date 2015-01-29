@@ -1,7 +1,7 @@
 #ifndef WAVREADER_H
 #define WAVREADER_H
 
-#include "base\AudioFileDecoder.h"
+#include "..\base\AudioFileDecoder.h"
 #include <string>
 #include <fstream>
 
