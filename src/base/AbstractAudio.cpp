@@ -28,6 +28,12 @@ AudioFormatStruct AbstractAudio::getAudioFormat()
 	}
 }
 
+void AbstractAudio::reset()
+{
+	if (previous != nullptr){
+		previous->reset();
+	}
+}
 //Methods to negotiate Sampling Rat and # Channels in Audio Chain
 void AbstractAudio::NegotiateSamplingRate()
 {

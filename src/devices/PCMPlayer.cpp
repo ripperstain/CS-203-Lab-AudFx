@@ -113,7 +113,9 @@ void PCMPlayer::playBackground()
 	of available devices and choose which you want to open
 	*/
 	MMRESULT res;
-	res = waveOutOpen(&hwo, deviceNum, &wf, (DWORD_PTR)&waveOutProc, (DWORD_PTR)&waveFreeBlockCount, CALLBACK_FUNCTION);
+	res = waveOutOpen(&hwo, deviceNum, &wf, (DWORD_PTR)&waveOutProc, (DWORD_PTR)&waveFreeBlockCount, 
+						CALLBACK_FUNCTION);
+
 	if (res != MMSYSERR_NOERROR) {
 #ifdef CONSOLEOUT
 		cout << "Failed to open Wave Output Device." << endl;
@@ -162,16 +164,18 @@ void PCMPlayer::playBackground()
 
 		//Check if we've reached the end of the audio stream
 		//Two cases, completely empty buffer, or partially empty buffer
-		if (readBytes == 0){
+		if (readBytes <= 0){
 			break;
 		}
 		if (readBytes < BLOCK_SIZE) {
-			//Set the rest of the buffer to zeroes and play the partial buffer
+			//Set the rest of the buffer to match the last valid entry
 			//Otherwise we can get a bit of noise at the end of the stream
 #ifdef CONSOLEOUT
 			//cout << "Partial buffer received: " << readBytes << " bytes." << endl;
 #endif
-			//memset(buffer + readBytes, 0, BLOCK_SIZE - readBytes);
+			//More involved than just a memset when dealing with different bit rates
+			//and number of channels.  This needs to be fixed properly
+			//memset(buffer + readBytes, buffer[readBytes - 1], BLOCK_SIZE - readBytes);
 		}
 
 
@@ -261,6 +265,7 @@ bool PCMPlayer::SelectDevice(int num)
 	}
 	return false;
 }
+
 void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 {
 	WAVEHDR* current = &waveBlocks[waveCurrentBlock];
@@ -284,8 +289,6 @@ void PCMPlayer::writeAudio(HWAVEOUT hWaveOut, float* data, int size)
 				data[i] = -1.0F;
 			}
 		}
-
-
 		
 	}
 

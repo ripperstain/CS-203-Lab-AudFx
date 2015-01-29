@@ -55,7 +55,7 @@ public:
 	virtual void setPrevious(AbstractAudio *p) { previous = p; }
 
 	virtual AudioFormatStruct getAudioFormat();
-	virtual void reset(){}
+	virtual void reset();
 
 protected:
 	//Methods to negotiate Sampling Rat and # Channels in Audio Chain

@@ -32,13 +32,13 @@ private:
 	int getAudioBlock(T *data, int size)
 	{
 		if (!infile) return 0;
-		int index = -1;
+		int index = 0;
 
 		while (infile){
-			index++;
 			if (index == size) break;
 			
 			infile.read((char*)&data[index], sizeof(data[index]));
+			index++;
 
 		}
 
