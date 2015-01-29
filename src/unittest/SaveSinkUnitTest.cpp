@@ -8,8 +8,8 @@ using namespace std;
 
 int main()
 {
-	cout << "Running PCMPlayer Unit Test... " << endl;
-	string filename = "..\\..\\..\\audio\\norestforthewicked.wav";
+	cout << "Running SaveSink Unit Test... " << endl;
+	string filename = "..\\..\\..\\audio\\norestforthewickedCOPY.wav";
 
 	SaveSink saver("Saver");
 	WavReader reader(filename);

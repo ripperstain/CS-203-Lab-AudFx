@@ -9,9 +9,12 @@
 class SaveSink : public AbstractAudio
 {
 public:
+	AudioFormatStruct AudioFormat;
+
 	SaveSink(std::string name);
 	~SaveSink();
 	bool saveWav(std::string filepath);
+	bool NegotiateParameters();
 	int getSamples(float* buffer, int length) { return 0; }
 
 private:

@@ -62,7 +62,7 @@ int WavReader::getSamples(float* buffer, int length)
 {
 	memset(buffer, 0, length);
 	//char* tmpbuffer = new char[length];
-	int size;// = getAudioBlock(infile, tmpbuffer, length);
+	int size;//= getAudioBlock(infile, tmpbuffer, length);
 	switch (AudioFormat.BitsPerSample){
 	case 8:
 		size = get8bitSamples(buffer, length);

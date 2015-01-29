@@ -16,6 +16,15 @@ SaveSink::~SaveSink() {
 }
 
 bool SaveSink::saveWav(string filepath){
+	if (!NegotiateParameters()){
+		return false;
+	}
+	if (previous == nullptr){
+		return false;
+	}
+
+	AudioFormat = previous->getAudioFormat();
+
 	ofstream outputBuffer(filepath, ios::out | ios::binary);
 
 	float buffer[BLOCK_SIZE];
@@ -38,5 +47,13 @@ bool SaveSink::saveWav(string filepath){
 		if (readBytes == 0) break;
 	}
 
+	return true;
+}
+
+bool SaveSink::NegotiateParameters()
+{
+	NegotiateSamplingRate();
+	NegotiateNumberOfChannels();
+	SetBufferSizeRecursive(BLOCK_SIZE);
 	return true;
 }
