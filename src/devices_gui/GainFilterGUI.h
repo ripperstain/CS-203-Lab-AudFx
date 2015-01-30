@@ -12,7 +12,7 @@ public:
 	GainFilterGUI(wxWindow* parent, wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition, GainFilter* device = nullptr);
 
-	AbstractAudio* getDevice();
+	GainFilter* getDevice();
 	void setDevice(GainFilter* device);
 
 	void OnGainAdjust(wxCommandEvent& e);

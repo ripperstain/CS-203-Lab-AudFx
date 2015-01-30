@@ -50,7 +50,7 @@ const wxPoint& pos, GainFilter* device)
 	sizer->SetSizeHints(this);
 }
 
-AbstractAudio* GainFilterGUI::getDevice()
+GainFilter* GainFilterGUI::getDevice()
 {
 	return filter;
 }

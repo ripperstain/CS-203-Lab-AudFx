@@ -46,6 +46,8 @@
 #include "devices_gui/KaraokeGUI.h"
 #include "devices_gui/PlaybackGUI.h"
 #include "devices_gui/OpenFile_gui.h"
+#include "devices_gui/distortion_gui.h"
+#include "devices_gui/GainFilterGUI.h"
 #include "devices/WavReader.h"
 
 // Define a new application type, each program should derive a class from wxApp
@@ -78,6 +80,8 @@ private:
 	OpenFileGUI* fileSelector;
 	KaraokeGUI* karaoke;
 	PlaybackGUI* player;
+	DistortionGUI* distortion;
+	GainFilterGUI* gain;
 	wxStaticText *txtDrive, *txtMix;
 	wxStaticBoxSizer *staticSizer;
 	WavReader* reader;
@@ -194,14 +198,24 @@ MyFrame::MyFrame(const wxString& title)
 	sizer->Add(karaoke, 0, 0, 10);
 	player = new PlaybackGUI(this, wxID_ANY);
 	sizer->Add(player, 0, 0, 10);
+	distortion = new DistortionGUI(this, wxID_ANY);
+	sizer->Add(distortion, 0, 0, 10);
+	gain = new GainFilterGUI(this, wxID_ANY);
+	sizer->Add(gain, 0, 0, 10);
 
 	KaraokeProcessor* k = karaoke->getDevice();
 	PCMPlayer* p = player->getDevice();
+	DistortionFilter* d = distortion->getDevice();
+	GainFilter* g = gain->getDevice();
 
 	reader->setNext(k);
 	k->setPrevious(reader);
 	k->setNext(p);
-	p->setPrevious(k);
+	p->setPrevious(g);
+	d->setPrevious(k);
+	d->setNext(p);
+	g->setPrevious(d);
+	g->setNext(p);
 
 	SetSizer(sizer);
 	sizer->Fit(this);
