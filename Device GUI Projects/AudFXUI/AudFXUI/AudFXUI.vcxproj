@@ -58,7 +58,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_UNICODE;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\wxWidget302lib\include;..\..\wxWidget302lib\vc_lib\mswud;..\..\wxWidget302lib\include\msvc;..\..\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\vc_lib\mswu;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\include\msvc;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\include;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\src;..\..\wxWidget302lib\include;..\..\wxWidget302lib\vc_lib\mswud;..\..\wxWidget302lib\include\msvc;..\..\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -77,7 +77,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx;..\..\wxWidget302lib\include;..\..\wxWidget302lib\vc_lib\mswu;..\..\wxWidget302lib\include\msvc;..\..\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\vc_lib\mswu;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\include\msvc;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\include;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\src;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\include;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\include\msvc;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\wxWidget302lib\vc_lib\mswu;C:\Users\sbaldwin\Desktop\CS-203-Lab-AudFx\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,28 +89,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
-    <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
-    <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp" />
-    <ClCompile Include="..\..\src\devices\PCMPlayer.cpp" />
-    <ClCompile Include="..\..\src\devices\WavReader.cpp" />
-    <ClCompile Include="..\..\src\devices_gui\KaraokeGUI.cpp" />
-    <ClCompile Include="..\..\src\devices_gui\OpenFile_gui.cpp" />
-    <ClCompile Include="..\..\src\devices_gui\PlaybackGUI.cpp" />
-    <ClCompile Include="..\..\src\support\SampleConverter.cpp" />
+    <ClCompile Include="..\..\..\src\base\AbstractAudio.cpp" />
+    <ClCompile Include="..\..\..\src\base\AudioFileDecoder.cpp" />
+    <ClCompile Include="..\..\..\src\devices\Filters\DistortionFilter.cpp" />
+    <ClCompile Include="..\..\..\src\devices\Filters\GainFilter.cpp" />
+    <ClCompile Include="..\..\..\src\devices\KaraokeProcessor.cpp" />
+    <ClCompile Include="..\..\..\src\devices\MicrophoneReader.cpp" />
+    <ClCompile Include="..\..\..\src\devices\PCMPlayer.cpp" />
+    <ClCompile Include="..\..\..\src\devices\SaveSink.cpp" />
+    <ClCompile Include="..\..\..\src\devices\WavReader.cpp" />
+    <ClCompile Include="..\..\..\src\devices_gui\AudioInGUI.cpp" />
+    <ClCompile Include="..\..\..\src\devices_gui\distortion_gui.cpp" />
+    <ClCompile Include="..\..\..\src\devices_gui\GainFilterGUI.cpp" />
+    <ClCompile Include="..\..\..\src\devices_gui\KaraokeGUI.cpp" />
+    <ClCompile Include="..\..\..\src\devices_gui\OpenFile_gui.cpp" />
+    <ClCompile Include="..\..\..\src\devices_gui\PlaybackGUI.cpp" />
+    <ClCompile Include="..\..\..\src\support\SampleConverter.cpp" />
     <ClCompile Include="..\AudFXUI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\base\AbstractAudio.h" />
-    <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
-    <ClInclude Include="..\..\src\base\Interfaces.h" />
-    <ClInclude Include="..\..\src\devices\KaraokeProcessor.h" />
-    <ClInclude Include="..\..\src\devices\PCMPlayer.h" />
-    <ClInclude Include="..\..\src\devices\WavReader.h" />
-    <ClInclude Include="..\..\src\devices_gui\KaraokeGUI.h" />
-    <ClInclude Include="..\..\src\devices_gui\OpenFile_gui.h" />
-    <ClInclude Include="..\..\src\devices_gui\PlaybackGUI.h" />
-    <ClInclude Include="..\..\src\support\SampleConverter.h" />
+    <ClInclude Include="..\..\..\src\base\AbstractAudio.h" />
+    <ClInclude Include="..\..\..\src\base\AudioFileDecoder.h" />
+    <ClInclude Include="..\..\..\src\base\Interfaces.h" />
+    <ClInclude Include="..\..\..\src\devices\FFmpegExporter.h" />
+    <ClInclude Include="..\..\..\src\devices\Filters\DistortionFilter.h" />
+    <ClInclude Include="..\..\..\src\devices\Filters\GainFilter.h" />
+    <ClInclude Include="..\..\..\src\devices\KaraokeProcessor.h" />
+    <ClInclude Include="..\..\..\src\devices\MicrophoneReader.h" />
+    <ClInclude Include="..\..\..\src\devices\PCMPlayer.h" />
+    <ClInclude Include="..\..\..\src\devices\SaveSink.h" />
+    <ClInclude Include="..\..\..\src\devices\WavReader.h" />
+    <ClInclude Include="..\..\..\src\devices_gui\AudioInGUI.h" />
+    <ClInclude Include="..\..\..\src\devices_gui\distortion_gui.h" />
+    <ClInclude Include="..\..\..\src\devices_gui\GainFilterGUI.h" />
+    <ClInclude Include="..\..\..\src\devices_gui\KaraokeGUI.h" />
+    <ClInclude Include="..\..\..\src\devices_gui\OpenFile_gui.h" />
+    <ClInclude Include="..\..\..\src\devices_gui\PlaybackGUI.h" />
+    <ClInclude Include="..\..\..\src\support\SampleConverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
