@@ -51,6 +51,9 @@
     <ClCompile Include="..\..\src\devices\MicrophoneReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\UnitTestProjects\PanFilterUnitTest\PanFilterUnitTest\PanFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\base\AbstractAudio.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\devices\MicrophoneReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\UnitTestProjects\PanFilterUnitTest\PanFilterUnitTest\PanFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

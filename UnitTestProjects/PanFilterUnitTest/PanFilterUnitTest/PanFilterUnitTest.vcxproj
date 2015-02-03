@@ -10,10 +10,21 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\base\AbstractAudio.h" />
+    <ClInclude Include="..\..\..\src\base\unittest\AbstractAudioTest.h" />
+    <ClInclude Include="PanFilter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\base\AbstractAudio.cpp" />
+    <ClCompile Include="..\..\..\src\base\unittest\AbstractAudioTest.cpp" />
+    <ClCompile Include="PanFilter.cpp" />
+    <ClCompile Include="PanFilterUnitTest.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{325BF7AC-5E4D-4B7C-A507-D2DCE1C08D4E}</ProjectGuid>
+    <ProjectGuid>{857F5004-63C3-4FF4-BBDF-7186C85D3FF6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>UnitTest</RootNamespace>
+    <RootNamespace>PanFilterUnitTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,34 +52,33 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;CONSOLEOUT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;Dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;CONSOLEOUT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -76,42 +86,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>winmm.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
-    <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
-    <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp" />
-    <ClCompile Include="..\..\src\devices\Filters\DistortionFilter.cpp" />
-    <ClCompile Include="..\..\src\devices\Filters\GainFilter.cpp" />
-    <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp" />
-    <ClCompile Include="..\..\src\devices\MicrophoneReader.cpp" />
-    <ClCompile Include="..\..\src\devices\PCMPlayer.cpp" />
-    <ClCompile Include="..\..\src\devices\WavReader.cpp" />
-    <ClCompile Include="..\..\src\support\SampleConverter.cpp" />
-    <ClCompile Include="..\..\src\unittest\signalgenerator.cpp" />
-    <ClCompile Include="..\..\src\unittest\unittest.cpp" />
-    <ClCompile Include="..\..\UnitTestProjects\PanFilterUnitTest\PanFilterUnitTest\PanFilter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\base\AbstractAudio.h" />
-    <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
-    <ClInclude Include="..\..\src\base\Interfaces.h" />
-    <ClInclude Include="..\..\src\base\unittest\AbstractAudioTest.h" />
-    <ClInclude Include="..\..\src\devices\Filters\DistortionFilter.h" />
-    <ClInclude Include="..\..\src\devices\Filters\GainFilter.h" />
-    <ClInclude Include="..\..\src\devices\KaraokeProcessor.h" />
-    <ClInclude Include="..\..\src\devices\MicrophoneReader.h" />
-    <ClInclude Include="..\..\src\devices\PCMPlayer.h" />
-    <ClInclude Include="..\..\src\devices\WavReader.h" />
-    <ClInclude Include="..\..\src\support\SampleConverter.h" />
-    <ClInclude Include="..\..\src\unittest\signalgenerator.h" />
-    <ClInclude Include="..\..\UnitTestProjects\PanFilterUnitTest\PanFilterUnitTest\PanFilter.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="..\..\audio\Yamaha-SY-35-Clarinet-C5.wav" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

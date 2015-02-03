@@ -9,13 +9,13 @@
 #include <iostream>
 
 using namespace std;
-void testgain();
+void testPan();
 
 int main()
 {
 	cout << "Testing AbstractAudio class via derived test classes" << endl;
 	//AATestSource source("Source");
-	KaraokeProcessor processor("Processor");
+	PanProcessor processor("Processor");
 	AATestSink sink("Sink");
 	PCMPlayer player("Player");
 	WavReader reader("..\\..\\audio\\norestforthewicked.wav");
@@ -27,7 +27,7 @@ int main()
 	//so it does not have a previous link
 	//Sink is always the last device in the chain
 	//so it does not have a next link
-	testgain();
+	testPan();
 	if (1){
 		reader.setNext(&processor);
 		processor.setPrevious(&reader);
@@ -82,7 +82,7 @@ int main()
 
 	return 0;
 }
-void testgain()
+void testPan()
 {
 
 	//Testing if the gain filter modifies values 
