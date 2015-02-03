@@ -9,7 +9,8 @@ using namespace std;
 int main()
 {
 	cout << "Running SaveSink Unit Test... " << endl;
-	string filename = "..\\..\\..\\audio\\norestforthewickedCOPY.wav";
+	string filename = "..\\..\\..\\audio\\norestforthewicked.wav";
+	string filename2 = "..\\..\\..\\audio\\norestforthewickedCOPY2.wav";
 
 	SaveSink saver("Saver");
 	WavReader reader(filename);
@@ -19,7 +20,7 @@ int main()
 		reader.setNext(&saver);
 		saver.setPrevious(&reader);
 
-		saver.saveWav(filename);
+		saver.saveWav(filename2);
 
 	}
 
