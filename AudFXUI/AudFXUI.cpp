@@ -48,6 +48,7 @@
 #include "devices_gui/OpenFile_gui.h"
 #include "devices_gui/distortion_gui.h"
 #include "devices_gui/GainFilterGUI.h"
+#include "devices_gui/VocalBleedGUI.h"
 #include "devices/WavReader.h"
 
 // Define a new application type, each program should derive a class from wxApp
@@ -82,6 +83,7 @@ private:
 	PlaybackGUI* player;
 	DistortionGUI* distortion;
 	GainFilterGUI* gain;
+	VocalBleedGUI* vocal;
 	wxStaticText *txtDrive, *txtMix;
 	wxStaticBoxSizer *staticSizer;
 	WavReader* reader;
@@ -192,30 +194,35 @@ MyFrame::MyFrame(const wxString& title)
 	//reader = new WavReader("..\\audio\\norestforthewicked.wav");
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 	fileSelector = new OpenFileGUI(this, wxID_ANY);
-	sizer->Add(fileSelector, 0, 0, 10);
+	sizer->Add(fileSelector, 0, wxEXPAND, 10);
 	reader = fileSelector->getDevice();
 	karaoke = new KaraokeGUI(this, wxID_ANY);
-	sizer->Add(karaoke, 0, 0, 10);
-	player = new PlaybackGUI(this, wxID_ANY);
-	sizer->Add(player, 0, 0, 10);
+	sizer->Add(karaoke, 0, wxEXPAND, 10);
 	distortion = new DistortionGUI(this, wxID_ANY);
-	sizer->Add(distortion, 0, 0, 10);
+	sizer->Add(distortion, 0, wxEXPAND, 10);
 	gain = new GainFilterGUI(this, wxID_ANY);
-	sizer->Add(gain, 0, 0, 10);
+	sizer->Add(gain, 0, wxEXPAND, 10);
+	vocal = new VocalBleedGUI(this, wxID_ANY);
+	sizer->Add(vocal, 0, wxEXPAND, 10);
+	player = new PlaybackGUI(this, wxID_ANY);
+	sizer->Add(player, 0, wxEXPAND, 10);
 
 	KaraokeProcessor* k = karaoke->getDevice();
 	PCMPlayer* p = player->getDevice();
 	DistortionFilter* d = distortion->getDevice();
 	GainFilter* g = gain->getDevice();
+	VocalBleed* v = vocal->getDevice();
 
 	reader->setNext(k);
 	k->setPrevious(reader);
 	k->setNext(p);
-	p->setPrevious(g);
+	p->setPrevious(v);
 	d->setPrevious(k);
 	d->setNext(p);
 	g->setPrevious(d);
 	g->setNext(p);
+	v->setPrevious(g);
+	v->setNext(p);
 
 	SetSizer(sizer);
 	sizer->Fit(this);

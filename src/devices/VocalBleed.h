@@ -1,3 +1,4 @@
+#pragma once;
 #include "base\AbstractAudio.h"
 #include "cassert"
 
@@ -8,10 +9,10 @@ public:
 	VocalBleed(std::string name);
 	virtual int getSamples(float* buffer, int length);
 
-	void Enable(){ Enabled = true; }
-	void Disable(){ Enabled = false; }
+	void Enable(bool enabled){ Enabled = enabled; }
 	bool isEnabled(){ return Enabled; }
 
 private:
 	bool Enabled;
+
 };
