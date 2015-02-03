@@ -1,4 +1,5 @@
 #include "PlaybackGUI.h"
+#include <wx/image.h>
 
 const int ID_CHOICE = 120;
 const int ID_PLAYBUTTON = 121;
@@ -39,17 +40,42 @@ PlaybackGUI::PlaybackGUI(wxWindow* parent, wxWindowID id, const wxPoint& pos, PC
 		devlist.Add(wxString(it->c_str()));
 	}
 	DeviceList = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, devlist);
+	DeviceList->SetSelection(0);
+
 	sizer->Add(DeviceList, 0, 0, 10);
 
 	//Create Record and Stop buttons (Eventually make this a single button that toggles)
 	wxBoxSizer* buttonrow = new wxBoxSizer(wxHORIZONTAL);
-	play = new wxButton(this, ID_PLAYBUTTON, wxT("Play"), wxDefaultPosition, wxDefaultSize);
+	play = new wxButton(this, ID_PLAYBUTTON, wxT("Play"), wxDefaultPosition, wxDefaultSize, 
+						wxBU_NOTEXT | wxBU_EXACTFIT);
 	buttonrow->Add(play, 0, 0, 10);
-	pause = new wxButton(this, ID_PAUSEBUTTON, wxT("Pause"), wxDefaultPosition, wxDefaultSize);
+	pause = new wxButton(this, ID_PAUSEBUTTON, wxT("Pause"), wxDefaultPosition, wxDefaultSize, 
+						wxBU_NOTEXT | wxBU_EXACTFIT);
 	buttonrow->Add(pause, 0, 0, 10);
-	stop = new wxButton(this, ID_STOPBUTTON, wxT("Stop"), wxDefaultPosition, wxDefaultSize);
+	stop = new wxButton(this, ID_STOPBUTTON, wxT("Stop"), wxDefaultPosition, wxDefaultSize, 
+						wxBU_NOTEXT | wxBU_EXACTFIT);
 	buttonrow->Add(stop, 0, 0, 10);
 
+	wxImage::AddHandler(new wxJPEGHandler);
+	wxImage play_image(wxT("../../images/Play_Button.jpg"));
+	
+	if (play_image.IsOk()){
+		play_image.Rescale(32, 32);
+		play_bmp = new wxBitmap(play_image);
+		play->SetBitmap(*play_bmp);
+	}
+	wxImage pause_image(wxT("../../images/Pause_Button.jpg"));
+	if (pause_image.IsOk()){
+		pause_image.Rescale(32, 32);
+		pause_bmp = new wxBitmap(pause_image);
+		pause->SetBitmap(*pause_bmp);
+	}
+	wxImage stop_image(wxT("../../images/Stop_Button.jpg"));
+	if (stop_image.IsOk()){
+		stop_image.Rescale(32, 32);
+		stop_bmp = new wxBitmap(stop_image);
+		stop->SetBitmap(*stop_bmp);
+	}
 	sizer->Add(buttonrow, 0, 0, 10);
 
 	SetSizer(sizer);
