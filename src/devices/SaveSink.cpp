@@ -37,13 +37,13 @@ bool SaveSink::saveWav(string filepath){
 	ofstream outputBuffer(filepath, ios::out | ios::binary);
 
 	float buffer[BLOCK_SIZE];
-	unsigned char saveBuffer[BLOCK_SIZE];
+	short saveBuffer[BLOCK_SIZE];
 
 	//get header stuff here
 	//write the header to the begining of the file
 
 	char RIFF_marker[4] = { 'R', 'I', 'F', 'F' };
-	int overall_filesize;
+	int overall_filesize; //Size of overall file - 8. in bytes
 	char WAVE_fth[4] = { 'W', 'A', 'V', 'E' };
 	char fmt_format_chunk_marker[4] = { 'f', 'm', 't', NULL }; //Trailing null
 	int length_of_format = 16; //16?
@@ -56,7 +56,7 @@ bool SaveSink::saveWav(string filepath){
 	char data_header[4] = { 'd', 'a', 't', 'a' }; //data header marked "data"
 	int file_size; //data - size(equals file - size - 44).
 
-
+	char header[44];
 	//write the individual samples to the rest of the file
 
 	//check for what size samples they are/were
@@ -64,11 +64,11 @@ bool SaveSink::saveWav(string filepath){
 		DWORD readBytes;
 		readBytes = previous->getSamples(buffer, BLOCK_SIZE);
 
-		SampleConverter::convertFloatToUChar(saveBuffer, buffer, BLOCK_SIZE);
+		SampleConverter::convertFloatToShort(buffer, saveBuffer, BLOCK_SIZE);
 
-		outputBuffer.write(reinterpret_cast<const char*>(saveBuffer), BLOCK_SIZE);
+		outputBuffer.write((char *)saveBuffer, readBytes * 2);
 
-		if (readBytes == 0) break;
+		if (readBytes <= 0) break;
 	}
 
 	return true;
