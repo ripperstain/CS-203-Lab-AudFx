@@ -24,12 +24,6 @@
     <ClCompile Include="..\..\src\base\unittest\AbstractAudioTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\unittest\unittest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\devices\WavReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

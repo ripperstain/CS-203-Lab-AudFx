@@ -50,7 +50,7 @@ const wxPoint& pos, GainFilter* device)
 	sizer->SetSizeHints(this);
 }
 
-AbstractAudio* GainFilterGUI::getDevice()
+GainFilter* GainFilterGUI::getDevice()
 {
 	return filter;
 }
@@ -66,7 +66,7 @@ void GainFilterGUI::setDevice(GainFilter* device)
 
 void GainFilterGUI::OnGainAdjust(wxCommandEvent& e)
 {
-	filter->setgain(GainControl->GetValue());
+	filter->setgain((GainControl->GetValue()) / 20);
 	
 
 }

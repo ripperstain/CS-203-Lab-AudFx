@@ -31,6 +31,10 @@ private:
 	wxButton* stop;
 	wxChoice* DeviceList;
 
+	wxBitmap* play_bmp;
+	wxBitmap* pause_bmp;
+	wxBitmap* stop_bmp;
+
 	DECLARE_EVENT_TABLE()
 };
 

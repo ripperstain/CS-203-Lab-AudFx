@@ -65,11 +65,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\base\AbstractAudio.cpp" />
+    <ClCompile Include="..\..\..\src\base\AudioFileDecoder.cpp" />
     <ClCompile Include="..\..\..\src\devices\SaveSink.cpp" />
+    <ClCompile Include="..\..\..\src\devices\WavReader.cpp" />
+    <ClCompile Include="..\..\..\src\support\SampleConverter.cpp" />
+    <ClCompile Include="..\..\..\src\unittest\SaveSinkUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\base\AbstractAudio.h" />
+    <ClInclude Include="..\..\..\src\base\AudioFileDecoder.h" />
     <ClInclude Include="..\..\..\src\devices\SaveSink.h" />
+    <ClInclude Include="..\..\..\src\devices\WavReader.h" />
+    <ClInclude Include="..\..\..\src\support\SampleConverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

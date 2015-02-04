@@ -163,3 +163,5 @@ minimal/vc_mswu/minimal.exe
 PlayerGUI/vc_mswu/minimal.exe
 PlayerGUI/vc_mswud/minimal.exe
 minimal/vc_mswud/minimal.exe
+src/devices/WavReader.h
+src/unittest/unittest.cpp

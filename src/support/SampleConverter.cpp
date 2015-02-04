@@ -34,7 +34,7 @@ int SampleConverter::convertUCharToFloat(unsigned char* inBuffer, float* outBuff
 	return i;
 }
 
-int SampleConverter::convertFloatToUChar(unsigned char* inBuffer, float* outBuffer, int numSamples)
+int SampleConverter::convertFloatToUChar(unsigned char* outBuffer, float* inBuffer, int numSamples)
 {
 	int i;
 	unsigned int offset = 1 << (sizeof(unsigned char)* 8 - 1);
