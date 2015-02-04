@@ -9,8 +9,13 @@ using namespace std;
 
 MicrophoneReader::MicrophoneReader(string name) : AbstractAudio(name, AudioType::Source)
 {
-	deviceNum = WAVE_MAPPER;
+	
 	numDevices = waveInGetNumDevs();
+	if (numDevices > 0){
+		deviceNum = 0;
+	}else{
+		deviceNum = WAVE_MAPPER;
+	}
 	NumChannels = 1;
 	SamplingRate = 44100;
 	AudioFormat.NumChannels = NumChannels;
@@ -21,22 +26,33 @@ MicrophoneReader::MicrophoneReader(string name) : AbstractAudio(name, AudioType:
 	clearCache();
 	samplesRecorded = 0;
 
-	atomic_init(&isRecording, false);
+	atomic_init(&isRecording, AudioClosedState);
 	atomic_init(&waveFreeBlockCounter, -1);
 	atomic_init(&waveCurrentBlockIndex, 0);
+
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		WaveInHdr[i].lpData = new char[BLOCK_SIZE];
+		WaveInHdr[i].dwBufferLength = BLOCK_SIZE;
+		WaveInHdr[i].dwBytesRecorded = 0;
+		WaveInHdr[i].dwUser = i;
+		WaveInHdr[i].dwFlags = 0;
+		WaveInHdr[i].dwLoops = 0;
+	}
 
 }
 
 MicrophoneReader::~MicrophoneReader()
 {
-
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		delete WaveInHdr[i].lpData;
+	}
 }
-
-
 
 int MicrophoneReader::getSamples(float* buffer, int length)
 {
-
+	if (isRecording.load != AudioRecordingState){
+		return 0;
+	}
 	std::lock_guard<std::mutex> l(sampleMutex);
 
 	for (int i = 0; i < samplesRecorded; i++){
@@ -68,25 +84,37 @@ bool MicrophoneReader::SelectDevice(int devnum)
 	return false;
 }
 
-void MicrophoneReader::record()
+bool MicrophoneReader::Open()
 {
-	if (isRecording.load()){
-		return;
+	if (isRecording.load() == AudioRecordingState){
+		return true;
 	}
 
-	isRecording.store(true);
+	isRecording.store(AudioInitializingState);
 	recordThread = thread(&MicrophoneReader::recordBackground, this);
-	Sleep(100);
 
+	//loop wait for Initialize to complete
+	while (isRecording.load() == AudioInitializingState){}
+	
+	//Then check if initialization failed
+	if (isRecording.load() == AudioInitializeFailedState){
+		if (recordThread.joinable()){
+			recordThread.join();
+		}
+		return false;
+	}
+
+	Sleep(100);
+	return true;
 }
 
-void MicrophoneReader::stop()
+void MicrophoneReader::Close()
 {
-	if (isRecording.load() == false){
+	if (isRecording.load() == AudioClosedState){
 		return;
 	}
 
-	isRecording.store(false);
+	isRecording.store(AudioClosedState);
 	if (recordThread.joinable()){
 		recordThread.join();
 	}
@@ -101,6 +129,15 @@ void MicrophoneReader::clearCache()
 	}
 }
 
+void MicrophoneReader::WaveInCleanup()
+{
+	for (int i = 0; i < BLOCK_COUNT; i++){
+		if (WaveInHdr[i].dwFlags & WHDR_PREPARED){
+			waveInUnprepareHeader(hWaveIn, &WaveInHdr[i], sizeof(WAVEHDR));
+		}
+	}
+	waveInClose(hWaveIn);
+}
 
 static void CALLBACK waveInProc(HWAVEIN hWaveIn, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
 {
@@ -116,6 +153,11 @@ static void CALLBACK waveInProc(HWAVEIN hWaveIn, UINT uMsg, DWORD dwInstance, DW
 
 bool MicrophoneReader::initializeRecorder()
 {
+	WAVEINCAPS caps = {};
+	result = waveInGetDevCaps(deviceNum, &caps, sizeof(caps));
+	if (result != MMSYSERR_NOERROR){
+		return false;
+	}
 
 	WAVEFORMATEX pFormat;
 	pFormat.wFormatTag = WAVE_FORMAT_PCM;
@@ -148,15 +190,6 @@ bool MicrophoneReader::initializeRecorder()
 		return false;
 	}
 
-	for (int i = 0; i < BLOCK_COUNT; i++){
-		WaveInHdr[i].lpData = new char[BLOCK_SIZE];
-		WaveInHdr[i].dwBufferLength = BLOCK_SIZE;
-		WaveInHdr[i].dwBytesRecorded = 0;
-		WaveInHdr[i].dwUser = i;
-		WaveInHdr[i].dwFlags = 0;
-		WaveInHdr[i].dwLoops = 0;
-	}
-
 	return true;
 }
 
@@ -164,7 +197,7 @@ bool MicrophoneReader::initializeRecorder()
 void MicrophoneReader::recordBackground()
 {
 	if (!initializeRecorder()){
-		isRecording.store(false);
+		isRecording.store(AudioInitializeFailedState);
 		return;
 	}
 
@@ -181,10 +214,12 @@ void MicrophoneReader::recordBackground()
 #ifdef CONSOLEOUT
 		cout << "Failed to start Wave Input Device." << endl;
 #endif
-		isRecording.store(false);
+		WaveInCleanup();
+		isRecording.store(AudioInitializeFailedState);
+		return;
 	}
-
-	while (isRecording.load()){
+	isRecording.store(AudioRecordingState);
+	while (isRecording.load() == AudioRecordingState){
 		
 		//Sleep a millisecond if the Counter hasn't changed
 		if (index == waveFreeBlockCounter.load()){
@@ -196,7 +231,7 @@ void MicrophoneReader::recordBackground()
 			//Then add the buffer back to the Audio In device
 			index = waveFreeBlockCounter.load();
 			
-			{
+			{//Scope the lock_guard so it goes out of scope and unlocks the mutex when we're done with it
 				std::lock_guard<std::mutex> l(sampleMutex);
 				samplesRecorded = WaveInHdr[index].dwBytesRecorded / 2;
 				SampleConverter::convertShortToFloat((short*)WaveInHdr[index].lpData, sampleCache, samplesRecorded);
@@ -209,17 +244,14 @@ void MicrophoneReader::recordBackground()
 		}
 	}
 
-
 	waveInStop(hWaveIn);
 
-	for (int i = 0; i < BLOCK_COUNT; i++){
-		if (WaveInHdr[i].dwFlags & WHDR_PREPARED){
-			waveInUnprepareHeader(hWaveIn, &WaveInHdr[i], sizeof(WAVEHDR));
-		}
-		delete WaveInHdr[i].lpData;
+	{//Scope the lock_guard so it goes out of scope and unlocks the mutex when we're done with it
+		std::lock_guard<std::mutex> l(sampleMutex);
+		samplesRecorded = 0;
+		clearCache();
 	}
 
-	waveInClose(hWaveIn);
-	clearCache();
-	isRecording.store(false);
+	WaveInCleanup();
+	isRecording.store(AudioClosedState);
 }

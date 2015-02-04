@@ -16,15 +16,15 @@ public:
 	MicrophoneReader(std::string name);
 	~MicrophoneReader();
 
-	
 	int getSamples(float* buffer, int length);
 	
 	devicelist GetDevices();
 	bool SelectDevice(int devnum);
+	int GetSelectedDevice(){ return deviceNum; }
 	AudioFormatStruct getAudioFormat(){ return AudioFormat; }
 
-	void record();
-	void stop();
+	bool Open();
+	void Close();
 
 private:
 	int deviceNum;
@@ -34,12 +34,19 @@ private:
 	float sampleCache[BLOCK_SIZE];
 	volatile int samplesRecorded;
 	void clearCache();
+	void WaveInCleanup();
 
 	HWAVEIN hWaveIn;
 	WAVEHDR WaveInHdr[BLOCK_COUNT];
 	MMRESULT result;
 
 	bool initializeRecorder();
+	enum{
+		AudioClosedState,
+		AudioInitializingState,
+		AudioRecordingState,
+		AudioInitializeFailedState
+	};
 
 	std::thread recordThread;
 	std::atomic<int> isRecording;

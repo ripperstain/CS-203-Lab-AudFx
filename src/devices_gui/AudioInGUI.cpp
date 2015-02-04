@@ -39,14 +39,16 @@ const wxPoint& pos, MicrophoneReader* device)
 		devlist.Add(wxString(it->c_str()));
 	}
 	DeviceList = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, devlist);
+	DeviceList->SetSelection(filter->GetSelectedDevice());
 	sizer->Add(DeviceList, 0, 0, 10);
 
 
 	//Create Record and Stop buttons (Eventually make this a single button that toggles)
 	wxBoxSizer* buttonrow = new wxBoxSizer(wxHORIZONTAL);
-	Record = new wxButton(this, ID_RECORDBUTTON, wxT("Record"), wxDefaultPosition, wxDefaultSize);
+	Record = new wxButton(this, ID_RECORDBUTTON, wxT("Open"), wxDefaultPosition, wxDefaultSize);
 	buttonrow->Add(Record, 0, 0, 10);
-	Stop = new wxButton(this, ID_STOPBUTTON, wxT("Stop"), wxDefaultPosition, wxDefaultSize);
+	Stop = new wxButton(this, ID_STOPBUTTON, wxT("Close"), wxDefaultPosition, wxDefaultSize);
+	Stop->Enable(false);
 	buttonrow->Add(Stop, 0, 0, 10);
 
 	sizer->Add(buttonrow, 0, 0, 10);
@@ -76,10 +78,17 @@ void AudioInGUI::OnDeviceSelect(wxCommandEvent& e)
 
 void AudioInGUI::OnRecord(wxCommandEvent& e)
 {
-	filter->record();
+	if (filter->Open()){
+		DeviceList->Enable(false);
+		Record->Enable(false);
+		Stop->Enable(true);
+	}
 }
 
 void AudioInGUI::OnStop(wxCommandEvent& e)
 {
-	filter->stop();
+	filter->Close();
+	DeviceList->Enable(true);
+	Record->Enable(true);
+	Stop->Enable(false);
 }
