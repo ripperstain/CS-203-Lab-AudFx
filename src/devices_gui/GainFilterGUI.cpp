@@ -39,7 +39,7 @@ const wxPoint& pos, GainFilter* device)
 	tmpSizer->Add(drvLabel, 0, wxALIGN_CENTER, 10);
 	
 
-	GainControl = new wxSlider(this, ID_DRIVESLIDER, 20, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);
+	GainControl = new wxSlider(this, ID_DRIVESLIDER, 100, 0, 200, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);
 	tmpSizer->Add(GainControl, 0, wxALIGN_LEFT, 500);
 	
 
@@ -66,7 +66,7 @@ void GainFilterGUI::setDevice(GainFilter* device)
 
 void GainFilterGUI::OnGainAdjust(wxCommandEvent& e)
 {
-	filter->setgain((GainControl->GetValue()) / 20);
+	filter->setgain(((float)GainControl->GetValue()) / 100.0f);
 	
 
 }
