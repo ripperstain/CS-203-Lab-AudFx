@@ -25,14 +25,38 @@ bool SaveSink::saveWav(string filepath){
 
 	AudioFormat = previous->getAudioFormat();
 
+	WAVEFORMATEX wf;
+	wf.nSamplesPerSec = AudioFormat.SampleRate;
+	wf.wBitsPerSample = AudioFormat.BitsPerSample;
+	wf.nChannels = AudioFormat.NumChannels;
+	wf.cbSize = 0; // unused
+	wf.wFormatTag = WAVE_FORMAT_PCM;
+	wf.nBlockAlign = (wf.wBitsPerSample * wf.nChannels) >> 3;
+	wf.nAvgBytesPerSec = wf.nBlockAlign * wf.nSamplesPerSec;
+
 	ofstream outputBuffer(filepath, ios::out | ios::binary);
 
 	float buffer[BLOCK_SIZE];
-	unsigned char saveBuffer[BLOCK_SIZE];
+	short saveBuffer[BLOCK_SIZE];
 
 	//get header stuff here
 	//write the header to the begining of the file
 
+	char RIFF_marker[4] = { 'R', 'I', 'F', 'F' };
+	int overall_filesize; //Size of overall file - 8. in bytes
+	char WAVE_fth[4] = { 'W', 'A', 'V', 'E' };
+	char fmt_format_chunk_marker[4] = { 'f', 'm', 't', NULL }; //Trailing null
+	int length_of_format = 16; //16?
+	short type_format = 1; //PCM is 1
+	short num_channels = wf.nChannels;
+	int sample_rate = wf.nSamplesPerSec;
+	int sbc = (wf.nSamplesPerSec * wf.wBitsPerSample * wf.nChannels) /8; //(Sample Rate * BitsPerSample * Channels) / 8.
+	short bitsize;//(BitsPerSample * Channels) / 8
+	int bits_per_sample = wf.wBitsPerSample;
+	char data_header[4] = { 'd', 'a', 't', 'a' }; //data header marked "data"
+	int file_size; //data - size(equals file - size - 44).
+
+	char header[44];
 	//write the individual samples to the rest of the file
 
 	//check for what size samples they are/were
@@ -40,11 +64,11 @@ bool SaveSink::saveWav(string filepath){
 		DWORD readBytes;
 		readBytes = previous->getSamples(buffer, BLOCK_SIZE);
 
-		SampleConverter::convertFloatToUChar(saveBuffer, buffer, BLOCK_SIZE);
+		SampleConverter::convertFloatToShort(buffer, saveBuffer, BLOCK_SIZE);
 
-		outputBuffer.write(reinterpret_cast<const char*>(saveBuffer), BLOCK_SIZE);
+		outputBuffer.write((char *)saveBuffer, readBytes * 2);
 
-		if (readBytes == 0) break;
+		if (readBytes <= 0) break;
 	}
 
 	return true;
