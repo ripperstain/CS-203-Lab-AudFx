@@ -1,6 +1,6 @@
 #pragma once;
 
-#include "../../../src/base/AbstractAudio.h"
+#include "../../base/AbstractAudio.h"
 
 
 class PanFilter : public AbstractAudio
