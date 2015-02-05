@@ -24,10 +24,18 @@ int PanFilter::getSamples(float* buffer, int length)
 
 	for (int i = 0; i < samplesReturned; i += 2)
 	{
-		if (panValue == -1 || panValue == 1)
+		if (panValue < 0)
 		{
-			leftChannel = leftChannel * (-panValue);
-			rightChannel = rightChannel * (panValue);
+			leftChannel = 1.0;
+			rightChannel = 1.0 + panValue;
+
+			buffer[i] = buffer[i] * leftChannel;
+			buffer[i + 1] = buffer[i + 1] * rightChannel;
+		}
+		if (panValue > 0)
+		{
+			leftChannel = 1.0 - panValue;
+			rightChannel = 1.0;
 
 			buffer[i] = buffer[i] * leftChannel;
 			buffer[i + 1] = buffer[i + 1] * rightChannel;
