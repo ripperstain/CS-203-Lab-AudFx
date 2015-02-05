@@ -49,6 +49,7 @@
 #include "devices_gui/distortion_gui.h"
 #include "devices_gui/GainFilterGUI.h"
 #include "devices_gui/VocalBleedGUI.h"
+#include "devices_gui/PanFilterGUI.h"
 #include "devices/WavReader.h"
 
 // Define a new application type, each program should derive a class from wxApp
@@ -84,6 +85,7 @@ private:
 	DistortionGUI* distortion;
 	GainFilterGUI* gain;
 	VocalBleedGUI* vocal;
+	PanFilterGUI* pan;
 	wxStaticText *txtDrive, *txtMix;
 	wxStaticBoxSizer *staticSizer;
 	WavReader* reader;
@@ -204,6 +206,8 @@ MyFrame::MyFrame(const wxString& title)
 	sizer->Add(gain, 0, wxEXPAND, 10);
 	vocal = new VocalBleedGUI(this, wxID_ANY);
 	sizer->Add(vocal, 0, wxEXPAND, 10);
+	pan = new PanFilterGUI(this, wxID_ANY);
+	sizer->Add(pan, 0, wxEXPAND, 10);
 	player = new PlaybackGUI(this, wxID_ANY);
 	sizer->Add(player, 0, wxEXPAND, 10);
 
@@ -212,17 +216,20 @@ MyFrame::MyFrame(const wxString& title)
 	DistortionFilter* d = distortion->getDevice();
 	GainFilter* g = gain->getDevice();
 	VocalBleed* v = vocal->getDevice();
+	PanFilter* pn = pan->getDevice();
 
 	reader->setNext(k);
 	k->setPrevious(reader);
 	k->setNext(p);
-	p->setPrevious(v);
+	p->setPrevious(pn);
 	d->setPrevious(k);
 	d->setNext(p);
 	g->setPrevious(d);
 	g->setNext(p);
 	v->setPrevious(g);
 	v->setNext(p);
+	pn->setPrevious(v);
+	pn->setNext(p);
 
 	SetSizer(sizer);
 	sizer->Fit(this);

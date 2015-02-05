@@ -8,7 +8,7 @@ using namespace std;
 PanFilter::PanFilter(string name) : AbstractAudio(name, AudioType::Processor)
 {
 	//defult Pan value set to 1
-	panValue = 1;
+	panValue = 0;
 
 }
 
@@ -22,13 +22,17 @@ int PanFilter::getSamples(float* buffer, int length)
 	double rightChannel = 1.0;//variable to hold the Right Channels Output
 
 
-	for (int i = 0; i < samplesReturned; i + 2)
+	for (int i = 0; i < samplesReturned; i += 2)
 	{
-		leftChannel = leftChannel * (1 - panValue);
-		rightChannel = rightChannel * panValue;
+		if (panValue == -1 || panValue == 1)
+		{
+			leftChannel = leftChannel * (-panValue);
+			rightChannel = rightChannel * (panValue);
 
-		buffer[i] = buffer[i] * leftChannel;
-		buffer[i + 1] = buffer[i + 1] * rightChannel;
+			buffer[i] = buffer[i] * leftChannel;
+			buffer[i + 1] = buffer[i + 1] * rightChannel;
+		}
+		
 
 	}
 	//returns the modified samples
