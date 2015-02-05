@@ -50,7 +50,7 @@ MicrophoneReader::~MicrophoneReader()
 
 int MicrophoneReader::getSamples(float* buffer, int length)
 {
-	if (isRecording.load != AudioRecordingState){
+	if (isRecording.load() != AudioRecordingState){
 		return 0;
 	}
 	std::lock_guard<std::mutex> l(sampleMutex);

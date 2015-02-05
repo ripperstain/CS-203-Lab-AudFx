@@ -49,6 +49,7 @@
 #include "devices_gui/distortion_gui.h"
 #include "devices_gui/GainFilterGUI.h"
 #include "devices_gui/VocalBleedGUI.h"
+#include "devices_gui/SourceSelectorGUI.h"
 #include "devices/WavReader.h"
 
 // Define a new application type, each program should derive a class from wxApp
@@ -78,7 +79,7 @@ public:
 private:
     // any class wishing to process wxWidgets events must use this macro
     wxDECLARE_EVENT_TABLE();
-	OpenFileGUI* fileSelector;
+	SourceSelectorGUI* source_selector;
 	KaraokeGUI* karaoke;
 	PlaybackGUI* player;
 	DistortionGUI* distortion;
@@ -86,7 +87,7 @@ private:
 	VocalBleedGUI* vocal;
 	wxStaticText *txtDrive, *txtMix;
 	wxStaticBoxSizer *staticSizer;
-	WavReader* reader;
+	AbstractAudio* source;
 	void SetValues();
 };
 
@@ -193,9 +194,10 @@ MyFrame::MyFrame(const wxString& title)
 
 	//reader = new WavReader("..\\audio\\norestforthewicked.wav");
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-	fileSelector = new OpenFileGUI(this, wxID_ANY);
-	sizer->Add(fileSelector, 0, wxEXPAND, 10);
-	reader = fileSelector->getDevice();
+	source_selector = new SourceSelectorGUI(this, wxID_ANY);
+	sizer->Add(source_selector, 0, wxEXPAND, 10);
+
+	source = source_selector->getDevice();
 	karaoke = new KaraokeGUI(this, wxID_ANY);
 	sizer->Add(karaoke, 0, wxEXPAND, 10);
 	distortion = new DistortionGUI(this, wxID_ANY);
@@ -213,8 +215,8 @@ MyFrame::MyFrame(const wxString& title)
 	GainFilter* g = gain->getDevice();
 	VocalBleed* v = vocal->getDevice();
 
-	reader->setNext(k);
-	k->setPrevious(reader);
+	source->setNext(k);
+	k->setPrevious(source);
 	k->setNext(p);
 	p->setPrevious(v);
 	d->setPrevious(k);
