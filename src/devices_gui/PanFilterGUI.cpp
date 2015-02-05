@@ -39,7 +39,7 @@ const wxPoint& pos, PanFilter* device)
 	tmpSizer->Add(drvLabel, 0, wxALIGN_CENTER, 10);
 
 
-	PanControl = new wxSlider(this, ID_DRIVESLIDER, 0, -1, 1, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);
+	PanControl = new wxSlider(this, ID_DRIVESLIDER, 0, -100, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);
 	tmpSizer->Add(PanControl, 0, wxALIGN_LEFT, 500);
 
 
@@ -66,7 +66,7 @@ void PanFilterGUI::setDevice(PanFilter* device)
 
 void PanFilterGUI::OnPanAdjust(wxCommandEvent& e)
 {
-	filter->setPan((float)PanControl->GetValue());
+	filter->setPan(((float)PanControl->GetValue())/100.0f);
 
 
 }

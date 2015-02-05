@@ -52,6 +52,6 @@ void SourceSelectorGUI::OnOptionTwoSelect(wxCommandEvent& e)
 
 AbstractAudio* SourceSelectorGUI::getDevice()
 {
-	return audio_in_source_gui->getDevice();
+	return file_source_gui->getDevice();
 
 }
