@@ -1,10 +1,11 @@
-#include "PCMPlayer_UnitTest.h"
-
-#include "devices\PCMPlayer.h"
-#include "devices\WavReader.h"
-#include "cassert"
 
 #include <iostream>
+#include "cassert"
+
+#include "PCMPlayer_UnitTest.h"
+#include "devices\PCMPlayer.h"
+#include "devices\WavReader.h"
+#include "devices\playbackspeed_processor.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ int main()
 
 	PCMPlayer player("Player");
 	WavReader reader(filename);
+	PlaybackSpeedDevice speed("Speed Adjuster");
 
 	if (1){
 
@@ -29,8 +31,11 @@ int main()
 		wcout << *it << endl;
 		}
 
-		reader.setNext(&player);
-		player.setPrevious(&reader);
+		reader.setNext(&speed);
+		speed.setPrevious(&reader);
+		speed.setNext(&player);
+		player.setPrevious(&speed);
+		speed.SetPlaybackSpeed(1.25);
 
 		player.play();
 		char cmd;
