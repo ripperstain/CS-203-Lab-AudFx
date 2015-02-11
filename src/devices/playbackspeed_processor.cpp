@@ -24,8 +24,8 @@ float PlaybackSpeedDevice::GetPlaybackSpeed()
 
 int PlaybackSpeedDevice::getSamples(float* buffer, int length)
 {
-	int compute_buffer_size = length * playback_speed;
-
+	int compute_buffer_size = (int)(length * playback_speed);
+	compute_buffer_size -= compute_buffer_size % 2;
 	//Create or recreate the input buffer if playback_speed has changed
 	if (compute_buffer_size != input_buffer_length){
 		if (input_buffer != nullptr){
@@ -39,19 +39,29 @@ int PlaybackSpeedDevice::getSamples(float* buffer, int length)
 	int samples_received = previous->getSamples(input_buffer, input_buffer_length);
 	float sample_point = intermediate_point;
 	int out_index = 0;
-	for (int i = 0; i < samples_received && sample_point < samples_received; i++){
+	do{
 		assert(out_index != length); 
-		int index1 = sample_point;
-		int index2 = index1 + 1;
-		float interpolation_point = sample_point - index1;
-		float interpolated_sample = input_buffer[index1] * (1 - interpolation_point) +
-			input_buffer[index2] * interpolation_point;
+		int left_index1 = sample_point;
+		int left_index2 = left_index1 + 2;
+
+		int right_index1 = left_index1 + 1;
+		int right_index2 = left_index2 + 1;
+
+		float interpolation_point = sample_point - left_index1;
+
+		float interpolated_sample = input_buffer[left_index1] * interpolation_point +
+			input_buffer[left_index2] * (1 - interpolation_point);
+		buffer[out_index++] = interpolated_sample / 2.0f;
+
+		interpolated_sample = input_buffer[right_index1] * interpolation_point +
+			input_buffer[right_index2] * (1 - interpolation_point);
+		buffer[out_index++] = interpolated_sample / 2.0f;
+
+		sample_point += 2 + playback_speed;
 		
-		buffer[out_index] = interpolated_sample / 2.0f;
-		sample_point += playback_speed;
-		out_index++;
 		
-	}
+	}while (out_index < length && sample_point < samples_received);
+
 	if (sample_point > samples_received){
 		intermediate_point = sample_point - samples_received;
 	} else{
