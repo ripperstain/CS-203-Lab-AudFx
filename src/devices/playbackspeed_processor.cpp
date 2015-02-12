@@ -13,7 +13,7 @@ PlaybackSpeedDevice::PlaybackSpeedDevice(string fileName) : AbstractAudio(fileNa
 
 void PlaybackSpeedDevice::SetPlaybackSpeed(float speed)
 {
-	if (speed <= 0) return;
+	if (speed <= 0.0f) return;
 	playback_speed = speed;
 }
 
@@ -22,6 +22,13 @@ float PlaybackSpeedDevice::GetPlaybackSpeed()
 	return playback_speed;
 }
 
+
+//PlaybackSpeedDevice getSamples will request a proportionately sized
+//buffer from downstream devices to process into the requested buffer size
+//from upstream devices.
+//So if an 8k buffer is requested with playback_speed = 0.5, PlaybackSpeedDevice will create a local
+//4k buffer used to get samples from previous device.  The processor of reducing the speed by 50%
+//will create 8k interpolated samples from this 4k buffer.
 int PlaybackSpeedDevice::getSamples(float* buffer, int length)
 {
 	int compute_buffer_size = (int)(length * playback_speed);
@@ -49,15 +56,15 @@ int PlaybackSpeedDevice::getSamples(float* buffer, int length)
 
 		float interpolation_point = sample_point - left_index1;
 
-		float interpolated_sample = input_buffer[left_index1] * interpolation_point +
-			input_buffer[left_index2] * (1 - interpolation_point);
+		float interpolated_sample = input_buffer[left_index1] * (1 - interpolation_point) +
+			input_buffer[left_index2] * interpolation_point;
 		buffer[out_index++] = interpolated_sample / 2.0f;
 
-		interpolated_sample = input_buffer[right_index1] * interpolation_point +
-			input_buffer[right_index2] * (1 - interpolation_point);
+		interpolated_sample = input_buffer[right_index1] * (1 - interpolation_point) +
+			input_buffer[right_index2] * interpolation_point;
 		buffer[out_index++] = interpolated_sample / 2.0f;
 
-		sample_point += 2 + playback_speed;
+		sample_point += 1 + playback_speed;
 		
 		
 	}while (out_index < length && sample_point < samples_received);

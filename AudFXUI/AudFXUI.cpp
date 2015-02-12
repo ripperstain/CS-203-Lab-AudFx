@@ -51,6 +51,7 @@
 #include "devices_gui/VocalBleedGUI.h"
 #include "devices_gui/SourceSelectorGUI.h"
 #include "devices_gui/PanFilterGUI.h"
+#include "devices_gui/PlaybackSpeedGUI.h"
 #include "devices/WavReader.h"
 
 // Define a new application type, each program should derive a class from wxApp
@@ -87,6 +88,7 @@ private:
 	GainFilterGUI* gain;
 	VocalBleedGUI* vocal;
 	PanFilterGUI* pan_filter;
+	PlaybackSpeedGUI* playback_speed_gui;
 	wxStaticText *txtDrive, *txtMix;
 	wxStaticBoxSizer *staticSizer;
 	AbstractAudio* source;
@@ -210,6 +212,8 @@ MyFrame::MyFrame(const wxString& title)
 	sizer->Add(vocal, 0, wxEXPAND, 10);
 	pan_filter = new PanFilterGUI(this, wxID_ANY);
 	sizer->Add(pan_filter, 0, wxEXPAND, 10);
+	playback_speed_gui = new PlaybackSpeedGUI(this, wxID_ANY);
+	sizer->Add(playback_speed_gui, 0, wxEXPAND, 10);
 	player = new PlaybackGUI(this, wxID_ANY);
 	sizer->Add(player, 0, wxEXPAND, 10);
 
@@ -219,6 +223,7 @@ MyFrame::MyFrame(const wxString& title)
 	GainFilter* g = gain->getDevice();
 	VocalBleed* v = vocal->getDevice();
 	PanFilter* pan = pan_filter->getDevice();
+	PlaybackSpeedDevice* playback_device = playback_speed_gui->getDevice();
 
 	source->setNext(k);
 	k->setPrevious(source);
@@ -230,8 +235,10 @@ MyFrame::MyFrame(const wxString& title)
 	v->setPrevious(g);
 	v->setNext(pan);
 	pan->setPrevious(v);
-	pan->setNext(p);
-	p->setPrevious(pan);
+	pan->setNext(playback_device);
+	playback_device->setPrevious(pan);
+	playback_device->setNext(p);
+	p->setPrevious(playback_device);
 
 	SetSizer(sizer);
 	sizer->Fit(this);
