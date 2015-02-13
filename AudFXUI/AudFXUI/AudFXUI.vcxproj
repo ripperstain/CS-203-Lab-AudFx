@@ -91,8 +91,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\base\AbstractAudio.cpp" />
     <ClCompile Include="..\..\src\base\AudioFileDecoder.cpp" />
+    <ClCompile Include="..\..\src\devices\Equalizer.cpp" />
     <ClCompile Include="..\..\src\devices\Filters\DistortionFilter.cpp" />
     <ClCompile Include="..\..\src\devices\Filters\GainFilter.cpp" />
+    <ClCompile Include="..\..\src\devices\Filters\IIRFilter.cpp" />
     <ClCompile Include="..\..\src\devices\Filters\PanFilter.cpp" />
     <ClCompile Include="..\..\src\devices\KaraokeProcessor.cpp" />
     <ClCompile Include="..\..\src\devices\MicrophoneReader.cpp" />
@@ -102,6 +104,7 @@
     <ClCompile Include="..\..\src\devices\WavReader.cpp" />
     <ClCompile Include="..\..\src\devices_gui\AudioInGUI.cpp" />
     <ClCompile Include="..\..\src\devices_gui\distortion_gui.cpp" />
+    <ClCompile Include="..\..\src\devices_gui\EqualizerGUI.cpp" />
     <ClCompile Include="..\..\src\devices_gui\GainFilterGUI.cpp" />
     <ClCompile Include="..\..\src\devices_gui\KaraokeGUI.cpp" />
     <ClCompile Include="..\..\src\devices_gui\OpenFile_gui.cpp" />
@@ -117,8 +120,10 @@
     <ClInclude Include="..\..\src\base\AbstractAudio.h" />
     <ClInclude Include="..\..\src\base\AudioFileDecoder.h" />
     <ClInclude Include="..\..\src\base\Interfaces.h" />
+    <ClInclude Include="..\..\src\devices\Equalizer.h" />
     <ClInclude Include="..\..\src\devices\Filters\DistortionFilter.h" />
     <ClInclude Include="..\..\src\devices\Filters\GainFilter.h" />
+    <ClInclude Include="..\..\src\devices\Filters\IIRFilter.h" />
     <ClInclude Include="..\..\src\devices\Filters\PanFilter.h" />
     <ClInclude Include="..\..\src\devices\KaraokeProcessor.h" />
     <ClInclude Include="..\..\src\devices\MicrophoneReader.h" />
@@ -128,6 +133,7 @@
     <ClInclude Include="..\..\src\devices\WavReader.h" />
     <ClInclude Include="..\..\src\devices_gui\AudioInGUI.h" />
     <ClInclude Include="..\..\src\devices_gui\distortion_gui.h" />
+    <ClInclude Include="..\..\src\devices_gui\EqualizerGUI.h" />
     <ClInclude Include="..\..\src\devices_gui\GainFilterGUI.h" />
     <ClInclude Include="..\..\src\devices_gui\KaraokeGUI.h" />
     <ClInclude Include="..\..\src\devices_gui\OpenFile_gui.h" />
